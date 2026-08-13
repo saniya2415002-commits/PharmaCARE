@@ -3,7 +3,7 @@ const { supabase } = require('../config/db');
 const Order = {
     // Create an order checkout record
     create: (orderData, callback) => {
-        const { user_id, items, total } = orderData;
+        const { user_id, items, total, status } = orderData;
         let itemsJson = items;
         if (typeof items === 'string') {
             try {
@@ -18,7 +18,8 @@ const Order = {
             .insert([{
                 user_id: user_id || null,
                 items: itemsJson,
-                total: total
+                total: total,
+                status: status || 'shipped'
             }])
             .select('id')
             .single()
