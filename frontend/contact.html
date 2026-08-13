@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact & Support | PharmaCare</title>
+    <meta name="description" content="Get in touch with PharmaCare. Contact us for any medical queries, support, or product inquiries. We are available 24/7.">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="./assets/contact.css" />
+    <link rel="stylesheet" href="./assets/css/cart.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo" onclick="window.location.href='index.html'">PharmaCare</div>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Product</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="profile.html" class="profile-icon-btn" id="headerProfileBtn" aria-label="User Profile">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCountBadge" class="badge">0</span>
+        </button>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE BANNER -->
+    <section class="page-banner">
+      <h1>Contact & Support</h1>
+      <p>We are available 24/7 to assist with your medical queries</p>
+    </section>
+
+    <!-- CONTACT INFO CARDS -->
+    <section class="contact-info-section">
+      <div class="info-card">
+        <i class="fas fa-map-marker-alt"></i>
+        <h3>Our Office Location</h3>
+        <p>123 Medical Hub, Main Road, New Delhi, India</p>
+      </div>
+
+      <div class="info-card">
+        <i class="fas fa-phone-alt"></i>
+        <h3>Call Us Now</h3>
+        <p>+91 98765 43210</p>
+        <p>+91 11 2345 6789</p>
+      </div>
+
+      <div class="info-card">
+        <i class="fas fa-envelope"></i>
+        <h3>Email Support</h3>
+        <p>info@pharmacare.com</p>
+        <p>support@pharmacare.com</p>
+      </div>
+
+      <div class="info-card">
+        <i class="fas fa-clock"></i>
+        <h3>Working Hours</h3>
+        <p>Mon - Sat: 9:00 AM - 8:00 PM</p>
+        <p>Sunday: Closed</p>
+      </div>
+    </section>
+
+    <!-- FORM & MAP SECTION -->
+    <section class="contact-form-section">
+      <!-- LEFT: CONTACT FORM -->
+      <div class="form-wrapper">
+        <h2>Send Us A Message</h2>
+        <form id="contactForm" onsubmit="return validateContactForm(event);">
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Enter your full name"
+            />
+            <small class="error-msg" id="nameError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" placeholder="Enter your email" />
+            <small class="error-msg" id="emailError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input
+              type="text"
+              id="phone"
+              placeholder="Enter 10 digit mobile number"
+            />
+            <small class="error-msg" id="phoneError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your Message *</label>
+            <textarea
+              id="message"
+              rows="5"
+              placeholder="Write your message here..."
+            ></textarea>
+            <small class="error-msg" id="messageError"></small>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            Send Message <i class="fas fa-paper-plane"></i>
+          </button>
+
+          <!-- Success Alert Toast -->
+          <div id="formSuccess" class="success-alert">
+            ✅ Thank you! Your message has been sent successfully.
+          </div>
+        </form>
+      </div>
+
+      <!-- RIGHT: GOOGLE MAP EMBED -->
+      <div class="map-wrapper">
+        <h2>Find Us On Map</h2>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117925.33439927742!2d88.34735275!3d22.53542735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f882db4908f667%3A0x43e330e68f6c2cbc!2sKolkata%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1785935050169!5m2!1sen!2sin"
+          width="600"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      <div>
+        <h3>PharmaCare</h3>
+        <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+        <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+        <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+      </div>
+
+      <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="products.html">Products</a></p>
+      </div>
+
+      <div>
+        <h3>Useful Links</h3>
+        <p><a href="gallery.html">Gallery</a></p>
+        <p><a href="blog.html">Blog Articles</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+      </div>
+
+      <div>
+        <h3>Our Location</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Medical Hub, New Delhi</p>
+        <p><i class="fas fa-envelope"></i> info@pharmacare.com</p>
+      </div>
+    </footer>
+
+    <!-- Cart Drawer Structure -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <span class="close-cart-btn" onclick="toggleCart()">&times;</span>
+        </div>
+        <div class="cart-items-container" id="cartItemsContainer"></div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total:</span>
+                <span id="cartTotalVal">₹0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script src="assets/js/global.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/contact.js"></script>
+  </body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | PharmaCare</title>
+    <meta name="description" content="Access your PharmaCare profile to track orders, manage medical appointments, and update account details.">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/css/cart.css">
+    <link rel="stylesheet" href="./assets/profile.css">
+</head>
+<body>
+    
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        PharmaCare
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Product</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="profile.html" class="profile-icon-btn active" id="headerProfileBtn" aria-label="User Profile" style="color: var(--primary);">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCountBadge" class="badge">0</span>
+        </button>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<!-- PAGE BANNER -->
+<section class="page-banner">
+    <h1>My Profile Dashboard</h1>
+    <p>Manage your orders, appointments, and personal health details</p>
+</section>
+
+<!-- MAIN CONTAINER -->
+<main class="profile-main-container">
+    
+    <!-- AUTH GATE (Hidden when logged in) -->
+    <section class="auth-gate-section" id="authGate" style="display: none;">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                <h2>Welcome Back</h2>
+                <p>Login to manage your health logs and checkouts.</p>
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                        <i class="far fa-eye toggle-password-btn" onclick="togglePasswordVisibility('loginPassword', this)"></i>
+                    </div>
+                </div>
+                <span class="error-msg" id="loginError"></span>
+                <button type="submit" class="auth-submit-btn">Login to Account</button>
+            </form>
+            
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                <h2>Create Account</h2>
+                <p>Register to sync orders, save appointments, and unlock health logs.</p>
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Phone Number</label>
+                    <input type="tel" id="regPhone" placeholder="10-digit number" required>
+                    <span class="error-msg" id="regPhoneError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="regPassword" placeholder="Minimum 6 characters" required>
+                        <i class="far fa-eye toggle-password-btn" onclick="togglePasswordVisibility('regPassword', this)"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regDiseases">Medical Conditions / Diseases (Optional)</label>
+                    <input type="text" id="regDiseases" placeholder="E.g. Diabetes, Cough, Fever, Acidity">
+                </div>
+
+                <span class="error-msg" id="registerError"></span>
+                <button type="submit" class="auth-submit-btn">Register Account</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- DASHBOARD PANEL (Hidden when logged out) -->
+    <section class="dashboard-section" id="dashboardPanel" style="display: none;">
+        
+        <!-- Left Column: User Summary Card -->
+        <aside class="profile-sidebar-card">
+            <div class="avatar-wrapper">
+                <i class="fas fa-user-circle"></i>
+                <h3 id="sidebarUserName">User Name</h3>
+                <span id="sidebarUserEmail">user@email.com</span>
+                <div id="sidebarDiseaseBadge" style="margin-top: 10px; font-size: 13px; color: var(--primary); font-weight: 600; display: none;"></div>
+            </div>
+            
+            <nav class="sidebar-tabs-nav">
+                <button class="sidebar-tab-btn active" onclick="switchDashboardTab('appointments')">
+                    <i class="fas fa-calendar-check"></i> My Appointments
+                </button>
+                <button class="sidebar-tab-btn" onclick="switchDashboardTab('orders')">
+                    <i class="fas fa-shopping-bag"></i> Order History
+                </button>
+                <button class="sidebar-tab-btn" onclick="switchDashboardTab('settings')">
+                    <i class="fas fa-cog"></i> Account Settings
+                </button>
+            </nav>
+            
+            <button class="sidebar-logout-btn" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </aside>
+        
+        <!-- Right Column: Tab View Panels -->
+        <div class="profile-content-panels">
+            
+            <!-- Tab: Appointments -->
+            <div class="content-panel active" id="panelAppointments">
+                <h2>My Appointments</h2>
+                <p>View your scheduled bookings and consultation slots with our experts.</p>
+                <div class="appointments-list" id="appointmentsList">
+                    <!-- Dynamic bookings load here -->
+                </div>
+            </div>
+            
+            <!-- Tab: Orders -->
+            <div class="content-panel" id="panelOrders">
+                <h2>Order History</h2>
+                <p>Review checkouts, delivery logs, and medicines ordered from our catalog.</p>
+                <div class="orders-list" id="ordersList">
+                    <!-- Dynamic orders load here -->
+                </div>
+            </div>
+            
+            <!-- Tab: Settings -->
+            <div class="content-panel" id="panelSettings">
+                <h2>Account Settings</h2>
+                <p>Update your personal information and password details.</p>
+                
+                <form id="updateProfileForm" onsubmit="handleUpdateProfile(event)" style="display: flex; flex-direction: column; gap: 15px; max-width: 480px; margin-top: 15px;">
+                    <div class="form-group">
+                        <label for="settingsName">Full Name</label>
+                        <input type="text" id="settingsName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsEmail">Email Address (Read-only)</label>
+                        <input type="email" id="settingsEmail" readonly style="opacity: 0.7; cursor: not-allowed; background: #e2e8f0;">
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsPhone">Phone Number</label>
+                        <input type="tel" id="settingsPhone" required>
+                        <span class="error-msg" id="settingsPhoneError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsDiseases">Medical Conditions / Diseases</label>
+                        <input type="text" id="settingsDiseases" placeholder="E.g. Diabetes, Cough, Fever, Acidity">
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsPassword">New Password (Leave blank to keep current)</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="settingsPassword" placeholder="••••••••">
+                            <i class="far fa-eye toggle-password-btn" onclick="togglePasswordVisibility('settingsPassword', this)"></i>
+                        </div>
+                    </div>
+                    <span class="success-alert" id="settingsSuccess" style="display: none;">Profile updated successfully!</span>
+                    <span class="error-msg" id="settingsError"></span>
+                    <button type="submit" class="update-profile-btn" style="width: fit-content; padding: 12px 30px; margin-top: 10px;">
+                        Save Changes
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+    </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <div>
+        <h3>PharmaCare</h3>
+        <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+        <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+        <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+    </div>
+
+    <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="products.html">Products</a></p>
+    </div>
+
+    <div>
+        <h3>Useful Links</h3>
+        <p><a href="gallery.html">Gallery</a></p>
+        <p><a href="blog.html">Blog Articles</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+    </div>
+
+    <div>
+        <h3>Our Location</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Medical Hub, New Delhi</p>
+        <p><i class="fas fa-envelope"></i> info@pharmacare.com</p>
+    </div>
+</footer>
+
+<!-- Cart Drawer Structure -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <span class="close-cart-btn" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-items-container" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="cartTotalVal">₹0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+    </div>
+</div>
+
+<!-- Order Details Modal Structure -->
+<div class="modal-overlay" id="orderModal" onclick="closeOrderModal(event)">
+    <div class="modal-dialog" onclick="event.stopPropagation()">
+        <span class="close-modal" onclick="closeOrderModal()">&times;</span>
+        <div class="order-modal-content">
+            <h2 id="modalOrderId">Order Details</h2>
+            <p class="order-date" id="modalOrderDate"></p>
+            
+            <!-- Timeline Tracker -->
+            <div class="order-timeline" id="orderTimeline">
+                <div class="timeline-step" id="step-processing">
+                    <div class="step-icon"><i class="fas fa-box"></i></div>
+                    <div class="step-label">Processing</div>
+                </div>
+                <div class="timeline-step" id="step-shipped">
+                    <div class="step-icon"><i class="fas fa-truck"></i></div>
+                    <div class="step-label">Shipped</div>
+                </div>
+                <div class="timeline-step" id="step-delivered">
+                    <div class="step-icon"><i class="fas fa-home"></i></div>
+                    <div class="step-label">Delivered</div>
+                </div>
+            </div>
+            
+            <!-- Items list -->
+            <h3>Items Ordered</h3>
+            <div class="modal-items-container" id="modalItemsContainer"></div>
+            
+            <div class="modal-order-footer">
+                <span>Total Amount:</span>
+                <span class="order-total-price" id="modalOrderTotal">₹0.00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabaseClient.js"></script>
+<script src="assets/js/global.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products Catalog | PharmaCare</title>
+    <meta name="description" content="Browse our catalog of safe and high-quality medicines, tablets, syrups, capsules, and creams. Search products easily online at PharmaCare.">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/product.css">
+    <link rel="stylesheet" href="./assets/css/cart.css">
+</head>
+<body>
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        PharmaCare
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Product</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="profile.html" class="profile-icon-btn" id="headerProfileBtn" aria-label="User Profile">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCountBadge" class="badge">0</span>
+        </button>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<!-- PAGE BANNER -->
+<section class="page-banner">
+    <h1>Our Products Catalog</h1>
+    <p>Browse high-quality medical & healthcare products</p>
+</section>
+
+<!-- FILTER & SEARCH BAR -->
+<section class="filter-container">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search product name..." onkeyup="filterProducts()">
+    </div>
+
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterCategory('all')">All</button>
+        <button class="filter-btn" onclick="filterCategory('tablet')">Tablet</button>
+        <button class="filter-btn" onclick="filterCategory('syrup')">Syrup</button>
+        <button class="filter-btn" onclick="filterCategory('capsule')">Capsule</button>
+        <button class="filter-btn" onclick="filterCategory('cream')">Cream</button>
+    </div>
+</section>
+
+
+<!-- PRODUCTS GRID -->
+<section class="products-grid-section">
+    <div class="products" id="productGrid">
+        
+        <div class="card" data-category="tablet">
+            <span class="badge">Popular</span>
+            <img src="assets/images/product_paracetamol.png" alt="Paracetamol 500mg">
+            <h3>Paracetamol Tablet</h3>
+            <p class="price">₹45.00</p>
+            <button onclick="addToCart('Paracetamol Tablet')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="syrup">
+            <span class="badge">Bestseller</span>
+            <img src="assets/images/product_cough_syrup.png" alt="Cough Syrup">
+            <h3>Cough Reliever Syrup</h3>
+            <p class="price">₹120.00</p>
+            <button onclick="addToCart('Cough Reliever Syrup')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="capsule">
+            <img src="assets/images/product_multivitamin.png" alt="Multivitamin Capsule">
+            <h3>Multivitamin Capsule</h3>
+            <p class="price">₹250.00</p>
+            <button onclick="addToCart('Multivitamin Capsule')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="cream">
+            <img src="assets/images/product_antiseptic.png" alt="Antiseptic Cream">
+            <h3>Antiseptic Healing Cream</h3>
+            <p class="price">₹85.00</p>
+            <button onclick="addToCart('Antiseptic Healing Cream')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="tablet">
+            <img src="assets/images/product_vitamin_c.png" alt="Vitamin C 1000mg">
+            <h3>Vitamin C Chewable</h3>
+            <p class="price">₹95.00</p>
+            <button onclick="addToCart('Vitamin C Chewable')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="syrup">
+            <img src="assets/images/product_digestion.png" alt="Digestion Syrup">
+            <h3>Digestion Enzyme Syrup</h3>
+            <p class="price">₹140.00</p>
+            <button onclick="addToCart('Digestion Enzyme Syrup')">Add to Cart</button>
+        </div>
+
+        <!-- 10 NEW PRODUCTS ADDED -->
+        <div class="card" data-category="tablet">
+            <img src="assets/images/product_ibuprofen.png" alt="Ibuprofen Painkiller">
+            <h3>Ibuprofen Painkiller</h3>
+            <p class="price">₹65.00</p>
+            <button onclick="addToCart('Ibuprofen Painkiller')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="capsule">
+            <span class="badge">Prescription</span>
+            <img src="assets/images/product_amoxicillin.png" alt="Amoxicillin Antibiotic">
+            <h3>Amoxicillin Antibiotic</h3>
+            <p class="price">₹180.00</p>
+            <button onclick="addToCart('Amoxicillin Antibiotic')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="cream">
+            <img src="assets/images/product_aloe.png" alt="Moisturizing Aloe Gel">
+            <h3>Moisturizing Aloe Gel</h3>
+            <p class="price">₹110.00</p>
+            <button onclick="addToCart('Moisturizing Aloe Gel')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="tablet">
+            <img src="assets/images/product_iron.png" alt="Iron & Folic Acid">
+            <h3>Iron & Folic Acid</h3>
+            <p class="price">₹150.00</p>
+            <button onclick="addToCart('Iron & Folic Acid')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="tablet">
+            <img src="assets/images/product_calcium.png" alt="Calcium Vitamin D3">
+            <h3>Calcium Vitamin D3</h3>
+            <p class="price">₹220.00</p>
+            <button onclick="addToCart('Calcium Vitamin D3')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="tablet">
+            <img src="assets/images/product_allergy.png" alt="Allergy Relief Diphenhydramine">
+            <h3>Allergy Relief Relief</h3>
+            <p class="price">₹75.00</p>
+            <button onclick="addToCart('Allergy Relief Relief')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="capsule">
+            <img src="assets/images/product_bcomplex.png" alt="B-Complex Energy Booster">
+            <h3>B-Complex Energy Booster</h3>
+            <p class="price">₹160.00</p>
+            <button onclick="addToCart('B-Complex Energy Booster')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="syrup">
+            <img src="assets/images/product_throat_syrup.png" alt="Soothing Throat Syrup">
+            <h3>Soothing Throat Syrup</h3>
+            <p class="price">₹90.00</p>
+            <button onclick="addToCart('Soothing Throat Syrup')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="cream">
+            <img src="assets/images/product_muscle_pain.png" alt="Muscle Pain Relief Cream">
+            <h3>Muscle Pain Relief Cream</h3>
+            <p class="price">₹125.00</p>
+            <button onclick="addToCart('Muscle Pain Relief Cream')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-category="capsule">
+            <span class="badge">Premium</span>
+            <img src="assets/images/product_fish_oil.png" alt="Fish Oil Omega-3">
+            <h3>Fish Oil Omega-3</h3>
+            <p class="price">₹320.00</p>
+            <button onclick="addToCart('Fish Oil Omega-3')">Add to Cart</button>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <div>
+        <h3>PharmaCare</h3>
+        <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+        <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+        <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+    </div>
+
+    <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="products.html">Products</a></p>
+    </div>
+
+    <div>
+        <h3>Useful Links</h3>
+        <p><a href="gallery.html">Gallery</a></p>
+        <p><a href="blog.html">Blog Articles</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+    </div>
+
+    <div>
+        <h3>Our Location</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Medical Hub, New Delhi</p>
+        <p><i class="fas fa-envelope"></i> info@pharmacare.com</p>
+    </div>
+</footer>
+
+<!-- Cart Drawer Structure -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <span class="close-cart-btn" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-items-container" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="cartTotalVal">₹0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabaseClient.js"></script>
+<script src="assets/js/global.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/product.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCare | High Quality Healthcare & Pharma Products</title>
+    <meta name="description" content="PharmaCare offers safe, reliable, and premium healthcare and pharmaceutical products. Explore our range of tablets, syrups, capsules, and creams.">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/css/cart.css">
+</head>
+<body>
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        PharmaCare
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Product</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="profile.html" class="profile-icon-btn" id="headerProfileBtn" aria-label="User Profile">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCountBadge" class="badge">0</span>
+        </button>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+
+
+<section class="slider">
+    <button class="prev" id="prevSlideBtn">&#10094;</button>
+
+    <div class="slides-container">
+        <div class="slide active">
+            <img src="assets/images/about_story.png" alt="Your Health, Our Priority">
+            <div class="slide-content">
+                <h1>Your Health, Our Top Priority</h1>
+                <p>Providing safe, reliable, and premium healthcare and pharmaceutical products since 2015.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="assets/images/product_multivitamin.png" alt="Premium Healthcare Products">
+            <div class="slide-content">
+                <h1>Premium Healthcare Products</h1>
+                <p>From daily supplements to essential medicines, browse our complete catalog.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="assets/images/blog_immunity.png" alt="Boost Your Daily Immunity">
+            <div class="slide-content">
+                <h1>Boost Your Daily Immunity</h1>
+                <p>Discover wellness tips and natural ingredients to keep your immune system strong.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="assets/images/blog_exercise.png" alt="Live Healthy & Active">
+            <div class="slide-content">
+                <h1>Live a Healthy & Active Life</h1>
+                <p>Follow our daily exercise and wellness guides for a happier, longer life.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="assets/images/product_vitamin_c.png" alt="Quality Tested Essentials">
+            <div class="slide-content">
+                <h1>Quality Tested Essentials</h1>
+                <p>Every product is tested thoroughly to ensure the highest clinical standards of safety.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="next" id="nextSlideBtn">&#10095;</button>
+</section>
+
+
+<section class="category">
+    <div class="cat" onclick="window.location.href='products.html?category=tablet'">
+        <i class="fa-solid fa-tablets"></i>
+        <span>tablet</span>
+    </div>
+    <div class="cat" onclick="window.location.href='products.html?category=syrup'">
+        <i class="fa-solid fa-prescription-bottle-medical"></i>
+        <span>Syrup</span>
+    </div>
+    <div class="cat" onclick="window.location.href='products.html?category=cream'">
+        <i class="fa-solid fa-hand-holding-droplet"></i>
+        <span>Gel</span>
+    </div>
+    <div class="cat" onclick="window.location.href='products.html?category=capsule'">
+        <i class="fa-solid fa-capsules"></i>
+        <span>capsule</span>
+    </div>
+    <div class="cat" onclick="window.location.href='products.html?category=tablet'">
+        <i class="fa-solid fa-pills"></i>
+        <span>vitamin</span>
+    </div>
+    <div class="cat" onclick="window.location.href='products.html?category=cream'">
+        <i class="fa-solid fa-pump-soap"></i>
+        <span>cream</span>
+    </div>
+</section>
+
+<!-- ================= product ================= -->
+<h2 class="section-heading">Some Recommended Products according to your diseases </h2>
+<section class="products">
+    <div class="card">
+        <img src="assets/images/product_paracetamol.png" alt="Paracetamol Tablet">
+        <h3>Paracetamol Tablet</h3>
+        <button onclick="window.location.href='products.html'">View</button>
+    </div>
+
+    <div class="card">
+         <img src="assets/images/product_cough_syrup.png" alt="Cough Reliever Syrup">
+       <h3>Cough Reliever Syrup</h3>
+        <button onclick="window.location.href='products.html'">View</button>
+    </div>
+
+    <div class="card">
+       <img src="assets/images/product_multivitamin.png" alt="Multivitamin Capsule">
+          <h3>Multivitamin Capsule</h3>
+        <button onclick="window.location.href='products.html'">View</button>
+    </div>
+
+    <div class="card">
+        <img src="assets/images/product_antiseptic.png" alt="Antiseptic Healing Cream">
+         <h3>Antiseptic Healing Cream</h3>
+        <button onclick="window.location.href='products.html'">View</button>
+    </div>
+
+    <div class="card">
+       <img src="assets/images/product_vitamin_c.png" alt="Vitamin C Chewable">
+          <h3>Vitamin C Chewable</h3>
+        <button onclick="window.location.href='products.html'">View</button>
+    </div>
+</section>
+
+<!-- ================= OFFER SLIDER ================= -->
+<section class="offer-slider-container">
+    <button class="offer-prev-btn" id="prevOfferBtn" aria-label="Previous Offer">&#10094;</button>
+
+    <div class="offer-slider-viewport">
+        <div class="offer-slider-track" id="offerSliderTrack">
+            <div class="offer-slide active" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('assets/images/offer_tablet_discount.png'); background-size: cover; background-position: center;">
+                <h2>30% OFF</h2>
+                <p>Book Your Order Now - Valid on All Tablets & Capsules!</p>
+            </div>
+            <div class="offer-slide" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('assets/images/offer_wellness_discount.png'); background-size: cover; background-position: center;">
+                <h2>50% OFF</h2>
+                <p>Summer Wellness Sale - Half price on all Multivitamins!</p>
+            </div>
+            <div class="offer-slide" style="background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('assets/images/offer_clearance_discount.png'); background-size: cover; background-position: center;">
+                <h2>80% OFF</h2>
+                <p>Mega Clearance Deal - Up to 80% discount on select health creams!</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="offer-next-btn" id="nextOfferBtn" aria-label="Next Offer">&#10095;</button>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section class="blogs-section-wrapper">
+    <button class="left" id="prevBlogBtn" aria-label="Previous Blogs">&#10094;</button>
+
+    <div class="blogs-viewport">
+        <div class="blogs-track" id="blogsTrack">
+            <div class="blog-card" onclick="window.location.href='blog.html'">
+                <img src="assets/images/blog_immunity.png" alt="10 Tips for Maintaining a Healthy Immunity System">
+                <h3>10 Tips for Maintaining a Healthy Immunity System</h3>
+            </div>
+
+            <div class="blog-card" onclick="window.location.href='blog.html'">
+                <img src="assets/images/blog_vitamin_d.png" alt="Why Vitamin D Deficiency is Common and How to Fix It">
+                <h3>Why Vitamin D Deficiency is Common and How to Fix It</h3>
+            </div>
+
+            <div class="blog-card" onclick="window.location.href='blog.html'">
+                <img src="assets/images/blog_exercise.png" alt="Top Benefits of Daily Exercise">
+                <h3>Top Benefits of Daily Exercise</h3>
+            </div>
+
+            <div class="blog-card" onclick="window.location.href='blog.html'">
+                <img src="assets/images/blog_supplements.png" alt="How to Choose Safe Supplements">
+                <h3>How to Choose Safe Supplements</h3>
+            </div>
+
+            <div class="blog-card" onclick="window.location.href='blog.html'">
+                <img src="assets/images/blog_supplements.png" alt="The Ultimate Guide to Gut Health and Probiotics">
+                <h3>The Ultimate Guide to Gut Health and Probiotics</h3>
+            </div>
+
+            <div class="blog-card" onclick="window.location.href='blog.html'">
+                <img src="assets/images/gallery_testing.png" alt="Understanding Blood Pressure: Normal Ranges and Care Tips">
+                <h3>Understanding Blood Pressure: Normal Ranges and Care Tips</h3>
+            </div>
+        </div>
+    </div>
+
+    <button class="right" id="nextBlogBtn" aria-label="Next Blogs">&#10095;</button>
+</section>
+
+<!-- ================= REVIEW ================= -->
+<section class="reviews">
+    <button class="left" id="prevReviewBtn">&#10094;</button>
+
+    <div class="reviews-viewport">
+        <div class="reviews-track" id="reviewsTrack">
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"PharmaCare has been my go-to for chronic medications. The delivery is always on time, and the packaging is highly secure."</p>
+                <h4 class="review-author">Rahul Mehta</h4>
+                <span class="review-role">Regular Patient</span>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"As a doctor, I highly recommend PharmaCare. Their quality controls are outstanding, and they provide certified safe medicines."</p>
+                <h4 class="review-author">Dr. Anjali Rao</h4>
+                <span class="review-role">Cardiologist</span>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="review-text">"Excellent customer support. I had some queries regarding a multivitamin shipment and they solved it within minutes."</p>
+                <h4 class="review-author">Michael Green</h4>
+                <span class="review-role">Verified Buyer</span>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"The products are affordable and authentic. Very impressed by the quality of Cough Reliever and Vitamin C tablets."</p>
+                <h4 class="review-author">Sneha Patel</h4>
+                <span class="review-role">Mother of Two</span>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="review-text">"Convenient, fast, and professional. The online product search is very intuitive and checkout is extremely fast."</p>
+                <h4 class="review-author">David Wilson</h4>
+                <span class="review-role">Verified Buyer</span>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-text">"Absolutely love their products! The digestion syrup works wonders. The interface also looks spectacular."</p>
+                <h4 class="review-author">Priya Nair</h4>
+                <span class="review-role">Regular Buyer</span>
+            </div>
+        </div>
+    </div>
+
+    <button class="right" id="nextReviewBtn">&#10095;</button>
+</section>
+
+
+<!-- ================= PARTNER ================= -->
+<section class="partners">
+    <div class="partner">
+        <i class="fa-solid fa-flask-vial"></i>
+        <span>MedLabs</span>
+    </div>
+    <div class="partner">
+        <i class="fa-solid fa-dna"></i>
+        <span>BioPharma</span>
+    </div>
+    <div class="partner">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <span>HealthTrust</span>
+    </div>
+    <div class="partner">
+        <i class="fa-solid fa-hand-holding-medical"></i>
+        <span>CarePlus</span>
+    </div>
+    <div class="partner">
+        <i class="fa-solid fa-house-chimney-medical"></i>
+        <span>UniClinic</span>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <div>
+        <h3>PharmaCare</h3>
+        <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+        <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+        <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+    </div>
+
+    <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="products.html">Products</a></p>
+    </div>
+
+    <div>
+        <h3>Useful Links</h3>
+        <p><a href="gallery.html">Gallery</a></p>
+        <p><a href="blog.html">Blog Articles</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+    </div>
+
+    <div>
+        <h3>Our Location</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Medical Hub, New Delhi</p>
+        <p><i class="fas fa-envelope"></i> info@pharmacare.com</p>
+    </div>
+</footer>
+<!-- Cart Drawer Structure -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <span class="close-cart-btn" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-items-container" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="cartTotalVal">₹0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabaseClient.js"></script>
+<script src="assets/js/global.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

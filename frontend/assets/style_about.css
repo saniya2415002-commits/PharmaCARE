@@ -1,0 +1,491 @@
+/* Page Banner */
+.page-banner {
+    background: var(--primary-gradient);
+    color: white;
+    text-align: center;
+    padding: 70px 20px;
+    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.02);
+}
+
+.page-banner h1 {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.page-banner p {
+    font-size: 16px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* About Section */
+.about-section {
+    width: 90%;
+    margin: 60px auto;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.about-img, .about-content {
+    flex: 1;
+    min-width: 320px;
+}
+
+.about-img img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition-normal);
+}
+
+.about-img img:hover {
+    transform: scale(1.02);
+}
+
+.about-content h2 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    color: var(--text-main);
+}
+
+.about-content > p {
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+/* Tabs */
+.tab-buttons {
+    display: flex;
+    gap: 12px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-family: var(--font-heading);
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.tab-btn.active {
+    background: var(--primary-gradient);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+}
+
+.tab-content {
+    display: none;
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--shadow-md);
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content p {
+    color: var(--text-main);
+    font-size: 15px;
+}
+
+/* Stats Section */
+.stats-section {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 60px 8%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    text-align: center;
+    border-radius: var(--radius-lg);
+    width: 90%;
+    margin: 60px auto;
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-box {
+    flex: 1;
+    min-width: 180px;
+    transition: var(--transition-normal);
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+}
+
+.stat-box i {
+    font-size: 44px;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box h3 {
+    font-family: var(--font-heading);
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.stat-box p {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Team Section */
+.team-section {
+    width: 90%;
+    margin: 70px auto;
+    text-align: center;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 40px;
+    color: var(--text-main);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+}
+
+.team-card {
+    background: var(--bg-card);
+    padding: 30px 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: var(--transition-normal);
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.team-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid var(--bg-light);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.team-card:hover img {
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
+
+.team-card h3 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.team-card p {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Doctors Section */
+.doctors-section {
+    width: 90%;
+    margin: 70px auto;
+    text-align: center;
+}
+
+.doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 35px;
+    margin-top: 40px;
+}
+
+.doctor-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: var(--transition-normal);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.doctor-img-wrapper {
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-light);
+}
+
+.doctor-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-normal);
+}
+
+.doctor-card:hover .doctor-img-wrapper img {
+    transform: scale(1.05);
+}
+
+.doctor-info {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.doctor-spec {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--primary);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.doctor-info h3 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.doctor-exp {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.doctor-exp i {
+    color: var(--primary);
+}
+
+.doctor-bio {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.doctor-schedule {
+    background: var(--bg-light);
+    padding: 12px 15px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+}
+
+.doctor-schedule p {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.doctor-schedule i {
+    color: var(--primary);
+}
+
+.consult-btn {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    background: var(--primary-gradient);
+    color: white;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.consult-btn:hover {
+    background: var(--primary-hover-gradient);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .page-banner {
+        padding: 50px 15px;
+    }
+    .page-banner h1 {
+        font-size: 32px;
+    }
+    .about-section {
+        gap: 30px;
+        margin: 40px auto;
+    }
+    .about-content h2 {
+        font-size: 26px;
+    }
+    .tab-buttons {
+        gap: 8px;
+    }
+    .tab-btn {
+        padding: 10px 18px;
+        font-size: 13px;
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+    }
+    
+    /* Stats Section 2x2 grid */
+    .stats-section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 30px 4%;
+        margin: 30px auto;
+        border-radius: var(--radius-md);
+    }
+    .stat-box {
+        min-width: 0;
+    }
+    .stat-box i {
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+    .stat-box h3 {
+        font-size: 28px;
+    }
+    .stat-box p {
+        font-size: 12px;
+    }
+
+    /* Team Grid 2-Column Compact */
+    .section-title {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .team-card {
+        padding: 15px 10px;
+        border-radius: var(--radius-sm);
+    }
+    .team-card img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+        border-width: 2px;
+    }
+    .team-card h3 {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+    .team-card p {
+        font-size: 11px;
+    }
+
+    /* Doctors Section Compact */
+    .doctors-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .doctor-img-wrapper {
+        height: 180px;
+    }
+    .doctor-info {
+        padding: 15px;
+    }
+    .doctor-info h3 {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .doctor-spec {
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+    .doctor-exp {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+    .doctor-bio {
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+    .doctor-schedule {
+        padding: 8px 12px;
+        margin-bottom: 15px;
+    }
+    .doctor-schedule p {
+        font-size: 11px;
+    }
+    .consult-btn {
+        padding: 10px;
+        font-size: 13px;
+    }
+}

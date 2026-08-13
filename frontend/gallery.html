@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo & Event Gallery | PharmaCare</title>
+    <meta name="description" content="View snapshots of our advanced medical laboratories, medical expo events, team milestones, and award recognitions in the PharmaCare gallery.">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/gallery.css">
+    <link rel="stylesheet" href="./assets/css/cart.css">
+</head>
+<body>
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        PharmaCare
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Product</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="profile.html" class="profile-icon-btn" id="headerProfileBtn" aria-label="User Profile">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCountBadge" class="badge">0</span>
+        </button>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+
+<!-- PAGE BANNER -->
+<section class="page-banner">
+    <h1>Our Photo & Event Gallery</h1>
+    <p>Explore images of our lab, products, awards, and events</p>
+</section>
+
+<!-- FILTER BUTTONS -->
+<section class="gallery-filter-section">
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterGallery('all', event)">All Photos</button>
+        <button class="filter-btn" onclick="filterGallery('events', event)">Events</button>
+        <button class="filter-btn" onclick="filterGallery('lab', event)">Laboratory</button>
+        <button class="filter-btn" onclick="filterGallery('awards', event)">Awards</button>
+    </div>
+</section>
+
+
+<!-- GALLERY GRID -->
+<section class="gallery-section">
+    <div class="gallery-grid">
+        
+        <div class="gallery-item" data-category="lab">
+            <img src="assets/images/gallery_lab.png" alt="Lab Research">
+            <div class="overlay" onclick="openLightbox('assets/images/gallery_lab.png', 'Advanced Research Lab')">
+                <i class="fas fa-search-plus"></i>
+                <p>Advanced Research Lab</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="events">
+            <img src="assets/images/gallery_expo.png" alt="Medical Expo 2025">
+            <div class="overlay" onclick="openLightbox('assets/images/gallery_expo.png', 'Medical Expo Event')">
+                <i class="fas fa-search-plus"></i>
+                <p>Medical Expo Event</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="awards">
+            <img src="assets/images/gallery_award.png" alt="Best Healthcare Award">
+            <div class="overlay" onclick="openLightbox('assets/images/gallery_award.png', 'Best Healthcare Award')">
+                <i class="fas fa-search-plus"></i>
+                <p>Best Healthcare Award</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="lab">
+            <img src="assets/images/gallery_testing.png" alt="Quality Testing Unit">
+            <div class="overlay" onclick="openLightbox('assets/images/gallery_testing.png', 'Quality Testing Unit')">
+                <i class="fas fa-search-plus"></i>
+                <p>Quality Testing Unit</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="events">
+            <img src="assets/images/gallery_team_meet.png" alt="Annual Team Meet">
+            <div class="overlay" onclick="openLightbox('assets/images/gallery_team_meet.png', 'Annual Team Meet')">
+                <i class="fas fa-search-plus"></i>
+                <p>Annual Team Meet</p>
+            </div>
+        </div>
+
+        <div class="gallery-item" data-category="awards">
+            <img src="assets/images/gallery_certificate.png" alt="Excellence Certificate">
+            <div class="overlay" onclick="openLightbox('assets/images/gallery_certificate.png', 'Excellence Certificate')">
+                <i class="fas fa-search-plus"></i>
+                <p>Excellence Certificate</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- LIGHTBOX POPUP MODAL -->
+<div id="lightboxModal" class="lightbox-modal">
+    <span class="close-btn" onclick="closeLightbox()">&times;</span>
+    <img id="lightboxImg" src="" alt="Popup Image">
+    <p id="lightboxCaption"></p>
+</div>
+
+
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <div>
+        <h3>PharmaCare</h3>
+        <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+        <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+        <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+    </div>
+
+    <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="products.html">Products</a></p>
+    </div>
+
+    <div>
+        <h3>Useful Links</h3>
+        <p><a href="gallery.html">Gallery</a></p>
+        <p><a href="blog.html">Blog Articles</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+    </div>
+
+    <div>
+        <h3>Our Location</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Medical Hub, New Delhi</p>
+        <p><i class="fas fa-envelope"></i> info@pharmacare.com</p>
+    </div>
+</footer>
+
+<!-- Cart Drawer Structure -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <span class="close-cart-btn" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-items-container" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="cartTotalVal">₹0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+    </div>
+</div>
+
+<script src="assets/js/global.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="./assets/js/gallery.js"></script>
+</body>
+</html>

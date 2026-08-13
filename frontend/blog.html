@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Healthcare Articles & News | PharmaCare</title>
+    <meta name="description" content="Stay updated with healthcare tips, research, and expert wellness advice from the professional doctors and researchers at PharmaCare.">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="./assets/blog.css" />
+    <link rel="stylesheet" href="./assets/css/cart.css">
+  </head>
+  <body>
+    <header>
+      <div class="logo" onclick="window.location.href='index.html'">PharmaCare</div>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Product</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="profile.html" class="profile-icon-btn" id="headerProfileBtn" aria-label="User Profile">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCountBadge" class="badge">0</span>
+        </button>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE BANNER -->
+    <section class="page-banner">
+      <h1>Healthcare Articles & News</h1>
+      <p>
+        Stay updated with health tips, medical research, and wellness advice
+      </p>
+    </section>
+
+    <!-- FILTER BAR -->
+    <section class="blog-filters">
+      <div class="search-box">
+        <input
+          type="text"
+          id="blogSearchInput"
+          placeholder="Search articles..."
+          onkeyup="searchBlog()"
+        />
+      </div>
+      <div class="categories-filter">
+        <button class="filter-btn active" onclick="filterCategory('all')">All Articles</button>
+        <button class="filter-btn" onclick="filterCategory('wellness')">Wellness</button>
+        <button class="filter-btn" onclick="filterCategory('nutrition')">Nutrition</button>
+        <button class="filter-btn" onclick="filterCategory('healthcare')">Healthcare</button>
+        <button class="filter-btn" onclick="filterCategory('medicine')">Medicine</button>
+      </div>
+    </section>
+
+    <!-- BLOG CONTAINER -->
+    <section class="blog-container">
+      <!-- MAIN BLOG POSTS GRID -->
+      <div class="blog-posts-list">
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill wellness">Wellness</span>
+            <img src="assets/images/blog_immunity.png" alt="Healthy Lifestyle Tips" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Aug 03, 2026</span>
+              <span><i class="far fa-user"></i> Dr. Sharma</span>
+            </div>
+            <h2>10 Tips for Maintaining a Healthy Immunity System</h2>
+            <p>
+              A robust immune system shields you from seasonal illnesses and pathogens. Discover the optimal diet, essential supplements, and lifestyle habits to reinforce your body's natural defenses.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('10 Tips for Maintaining a Healthy Immunity System')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">12</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill nutrition">Nutrition</span>
+            <img src="assets/images/blog_vitamin_d.png" alt="Understanding Vitamin D" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Jul 28, 2026</span>
+              <span><i class="far fa-user"></i> Priya Verma</span>
+            </div>
+            <h2>Why Vitamin D Deficiency is Common and How to Fix It</h2>
+            <p>
+              Modern indoor lifestyles have made Vitamin D deficiency a widespread concern. Learn to recognize the symptoms early and explore natural sources and clinical remedies.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('Why Vitamin D Deficiency is Common and How to Fix It')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">28</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill nutrition">Nutrition</span>
+            <img src="assets/images/blog_supplements.png" alt="Gut Health Guide" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Jul 15, 2026</span>
+              <span><i class="far fa-user"></i> Priya Verma</span>
+            </div>
+            <h2>The Ultimate Guide to Gut Health and Probiotics</h2>
+            <p>
+              Understanding your microbiome is key to overall wellness. Learn how probiotics and prebiotic foods enhance digestion, support mood balance, and boost your immune response.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('The Ultimate Guide to Gut Health and Probiotics')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">19</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill wellness">Wellness</span>
+            <img src="assets/images/about.jpg" alt="Sleep Hygiene Guide" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Jul 10, 2026</span>
+              <span><i class="far fa-user"></i> Dr. Sharma</span>
+            </div>
+            <h2>Simple Ways to Improve Sleep Hygiene Naturally</h2>
+            <p>
+              Quality sleep is as essential as diet and exercise. Discover simple lifestyle shifts, daily routine changes, and natural herbal aids to help you fall asleep faster and wake up refreshed.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('Simple Ways to Improve Sleep Hygiene Naturally')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">34</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill nutrition">Nutrition</span>
+            <img src="assets/images/blog.jpg" alt="Benefits of Fish Oil" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Jul 02, 2026</span>
+              <span><i class="far fa-user"></i> Amit Patel</span>
+            </div>
+            <h2>5 Science-Backed Benefits of Omega-3 Fish Oil</h2>
+            <p>
+              From supporting heart health and reducing cognitive decline to lowering internal inflammation, Omega-3 fatty acids are critical. Explore what the latest clinical trials show about daily supplementation.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('5 Science-Backed Benefits of Omega-3 Fish Oil')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">15</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill healthcare">Healthcare</span>
+            <img src="assets/images/gallery_testing.png" alt="Understanding Blood Pressure" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Jun 28, 2026</span>
+              <span><i class="far fa-user"></i> Dr. Sandeep Kapoor</span>
+            </div>
+            <h2>Understanding Blood Pressure: Normal Ranges and Care Tips</h2>
+            <p>
+              High blood pressure often has no visible symptoms but can lead to severe cardiovascular issues. Learn how to track your readings accurately and discover methods to maintain healthy levels.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('Understanding Blood Pressure: Normal Ranges and Care Tips')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">42</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill healthcare">Healthcare</span>
+            <img src="assets/images/about_story.png" alt="Role of Antioxidants" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Jun 14, 2026</span>
+              <span><i class="far fa-user"></i> Priya Verma</span>
+            </div>
+            <h2>The Role of Antioxidants in Preventing Healthy Aging</h2>
+            <p>
+              Free radicals cause cellular damage and accelerate skin aging over time. Find out how daily foods rich in Vitamin C, Vitamin E, and Beta-Carotene fight oxidative stress to support healthy aging.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('The Role of Antioxidants in Preventing Healthy Aging')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">23</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill medicine">Medicine</span>
+            <img src="assets/images/blog_immunity.png" alt="Seasonal Allergies Prevention" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Jun 05, 2026</span>
+              <span><i class="far fa-user"></i> Dr. Vikram Aditya</span>
+            </div>
+            <h2>How to Prevent Seasonal Allergies This Spring</h2>
+            <p>
+              Spring brings pollen, leading to standard seasonal allergies. Discover effective daily preventative routines, natural antihistamines, and skin barriers to keep your systems clear.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('How to Prevent Seasonal Allergies This Spring')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">11</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill healthcare">Healthcare</span>
+            <img src="assets/images/gallery_lab.png" alt="Warning Signs of Diabetes" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> May 29, 2026</span>
+              <span><i class="far fa-user"></i> Dr. Sharma</span>
+            </div>
+            <h2>Recognizing the Early Warning Signs of Diabetes</h2>
+            <p>
+              Early detection of prediabetes can significantly reduce Type-2 risks. Learn to recognize the subtle warnings like constant fatigue, increased thirst, and blurred vision before they progress.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('Recognizing the Early Warning Signs of Diabetes')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">56</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill medicine">Medicine</span>
+            <img src="assets/images/gallery.jpg" alt="Safe Painkiller Usage" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> May 15, 2026</span>
+              <span><i class="far fa-user"></i> Dr. Sandeep Kapoor</span>
+            </div>
+            <h2>A Doctor's Guide to Safe Painkiller Usage</h2>
+            <p>
+              Over-the-counter painkillers are extremely common, but chronic overuse can damage liver and kidneys. Read our medical guidelines on safe dosages, warnings, and potential drug interactions.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('A Doctor\'s Guide to Safe Painkiller Usage')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">29</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill nutrition">Nutrition</span>
+            <img src="assets/images/blog_supplements.png" alt="Detox Diets Truth" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> May 02, 2026</span>
+              <span><i class="far fa-user"></i> Amit Patel</span>
+            </div>
+            <h2>The Truth About Detox Diets and Cleanse Programs</h2>
+            <p>
+              Juices and detox teas claim to purify body organs, but your liver and kidneys already handle detoxification naturally. Learn what scientific research says about healthy, natural cleansing.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('The Truth About Detox Diets and Cleanse Programs')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">38</span></span
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-post-card">
+          <div class="image-wrapper">
+            <span class="category-pill wellness">Wellness</span>
+            <img src="assets/images/blog_exercise.png" alt="Mental Health Importance" />
+          </div>
+          <div class="post-content">
+            <div class="meta-info">
+              <span><i class="far fa-calendar-alt"></i> Apr 22, 2026</span>
+              <span><i class="far fa-user"></i> Dr. Shalini Sen</span>
+            </div>
+            <h2>Why Mental Health is Crucial for Physical Wellness</h2>
+            <p>
+              Chronic stress and mental fatigue trigger physical symptoms like inflammation, gut disorders, and cardiovascular risks. Discover clinical tips to maintain healthy emotional and physical wellness.
+            </p>
+            <div class="post-footer">
+              <button
+                class="read-btn"
+                onclick="readArticle('Why Mental Health is Crucial for Physical Wellness')"
+              >
+                Read More <i class="fas fa-arrow-right"></i>
+              </button>
+              <span class="like-btn" onclick="toggleLike(this)"
+                ><i class="far fa-heart"></i>
+                <span class="like-count">47</span></span
+              >
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      <div>
+        <h3>PharmaCare</h3>
+        <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+        <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+        <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+      </div>
+
+      <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="products.html">Products</a></p>
+      </div>
+
+      <div>
+        <h3>Useful Links</h3>
+        <p><a href="gallery.html">Gallery</a></p>
+        <p><a href="blog.html">Blog Articles</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+      </div>
+
+      <div>
+        <h3>Our Location</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Medical Hub, New Delhi</p>
+        <p><i class="fas fa-envelope"></i> info@pharmacare.com</p>
+      </div>
+    </footer>
+
+    <!-- Cart Drawer Structure -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <span class="close-cart-btn" onclick="toggleCart()">&times;</span>
+        </div>
+        <div class="cart-items-container" id="cartItemsContainer"></div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total:</span>
+                <span id="cartTotalVal">₹0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Premium Article Modal Viewer -->
+    <div class="blog-modal" id="blogModal" onclick="closeBlogModal()">
+        <div class="blog-modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal-btn" onclick="closeBlogModal()">&times;</span>
+            <div id="modalArticleBody">
+                <!-- Dynamically injected via assets/js/blog.js -->
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/global.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/blog.js"></script>
+  </body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | PharmaCare</title>
+    <meta name="description" content="Learn more about PharmaCare. Since 2015, we have been providing high-quality healthcare and pharmaceutical products with a mission to make health affordable.">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/style_about.css">
+    <link rel="stylesheet" href="./assets/css/cart.css">
+    <link rel="stylesheet" href="./assets/css/booking.css">
+</head>
+<body>
+<header>
+    <div class="logo" onclick="window.location.href='index.html'">
+        PharmaCare
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Product</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="profile.html" class="profile-icon-btn" id="headerProfileBtn" aria-label="User Profile">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCountBadge" class="badge">0</span>
+        </button>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+
+<!-- PAGE BANNER -->
+<section class="page-banner">
+    <h1>About Our Company</h1>
+    <p>Home / About Us</p>
+</section>
+
+
+<!-- ABOUT STORY -->
+<section class="about-section">
+    <div class="about-img">
+        <img src="assets/images/about_story.png" alt="About PharmaCare">
+    </div>
+    <div class="about-content">
+        <h2>We Provide High Quality Healthcare Products</h2>
+        <p>Our company has been providing the highest quality healthcare and pharmaceutical products for over a decade. Our goal is to ensure safe, effective, and affordable medicines reach every patient in need.</p>
+
+        <!-- Tabs Navigation -->
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="openTab('mission')">Our Mission</button>
+            <button class="tab-btn" onclick="openTab('vision')">Our Vision</button>
+            <button class="tab-btn" onclick="openTab('history')">Our History</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="mission" class="tab-content active">
+            <p><strong>Mission:</strong> To make affordable, high-quality, and clinically tested medicines accessible to everyone, everywhere.</p>
+        </div>
+        <div id="vision" class="tab-content">
+            <p><strong>Vision:</strong> To become a globally trusted healthcare partner, driving wellness through innovation and absolute quality.</p>
+        </div>
+        <div id="history" class="tab-content">
+            <p><strong>History:</strong> Established in 2015, our commitment to clinical integrity and customer care has helped us serve over 50,000+ happy families.</p>
+        </div>
+    </div>
+</section>
+
+<!-- STATS COUNTER -->
+<section class="stats-section">
+    <div class="stat-box">
+        <i class="fas fa-user-md"></i>
+        <h3 class="counter" data-target="50">0</h3>
+        <p>Expert Doctors</p>
+    </div>
+    <div class="stat-box">
+        <i class="fas fa-smile"></i>
+        <h3 class="counter" data-target="25000">0</h3>
+        <p>Happy Clients</p>
+    </div>
+    <div class="stat-box">
+        <i class="fas fa-pills"></i>
+        <h3 class="counter" data-target="150">0</h3>
+        <p>Products</p>
+    </div>
+    <div class="stat-box">
+        <i class="fas fa-award"></i>
+        <h3 class="counter" data-target="12">0</h3>
+        <p>Awards Won</p>
+    </div>
+</section>
+
+<!-- TEAM SECTION -->
+<section class="team-section">
+    <h2 class="section-title">Meet Our Leadership Team</h2>
+    <div class="team-grid">
+        <div class="team-card">
+            <img src="assets/images/team1.png" alt="Dr. Rajesh Sharma">
+            <h3>Dr. Rajesh Sharma</h3>
+            <p>Founder & CEO</p>
+        </div>
+        <div class="team-card">
+            <img src="assets/images/team2.png" alt="Priya Verma">
+            <h3>Priya Verma</h3>
+            <p>Head of R&D</p>
+        </div>
+        <div class="team-card">
+            <img src="assets/images/team3.png" alt="Amit Patel">
+            <h3>Amit Patel</h3>
+            <p>Quality Manager</p>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERT DOCTORS SECTION -->
+<section class="doctors-section">
+    <h2 class="section-title">Our Expert Medical Consultants</h2>
+    <div class="doctors-grid">
+        <div class="doctor-card">
+            <div class="doctor-img-wrapper">
+                <img src="assets/images/doctor_kapoor.png" alt="Dr. Sandeep Kapoor">
+            </div>
+            <div class="doctor-info">
+                <span class="doctor-spec">Cardiologist</span>
+                <h3>Dr. Sandeep Kapoor</h3>
+                <p class="doctor-exp"><i class="fas fa-stethoscope"></i> 18+ Years Experience</p>
+                <p class="doctor-bio">Expert in cardiovascular health, preventative treatments, and hypertension management.</p>
+                <div class="doctor-schedule">
+                    <p><i class="far fa-clock"></i> Mon, Wed, Fri: 10:00 AM - 02:00 PM</p>
+                </div>
+                <a href="javascript:void(0)" class="consult-btn" onclick="openBookingModal('Dr. Sandeep Kapoor')">Book Appointment</a>
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-img-wrapper">
+                <img src="assets/images/doctor_sen.png" alt="Dr. Shalini Sen">
+            </div>
+            <div class="doctor-info">
+                <span class="doctor-spec">Pediatrician</span>
+                <h3>Dr. Shalini Sen</h3>
+                <p class="doctor-exp"><i class="fas fa-stethoscope"></i> 12+ Years Experience</p>
+                <p class="doctor-bio">Specializes in newborn care, pediatric nutrition, and childhood immunization therapies.</p>
+                <div class="doctor-schedule">
+                    <p><i class="far fa-clock"></i> Tue, Thu, Sat: 11:00 AM - 03:00 PM</p>
+                </div>
+                <a href="javascript:void(0)" class="consult-btn" onclick="openBookingModal('Dr. Shalini Sen')">Book Appointment</a>
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-img-wrapper">
+                <img src="assets/images/doctor_aditya.png" alt="Dr. Vikram Aditya">
+            </div>
+            <div class="doctor-info">
+                <span class="doctor-spec">Dermatologist</span>
+                <h3>Dr. Vikram Aditya</h3>
+                <p class="doctor-exp"><i class="fas fa-stethoscope"></i> 14+ Years Experience</p>
+                <p class="doctor-bio">Expert in clinical skincare treatments, laser dermatology, and allergy diagnostics.</p>
+                <div class="doctor-schedule">
+                    <p><i class="far fa-clock"></i> Mon, Tue, Thu: 04:00 PM - 07:00 PM</p>
+                </div>
+                <a href="javascript:void(0)" class="consult-btn" onclick="openBookingModal('Dr. Vikram Aditya')">Book Appointment</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div>
+        <h3>PharmaCare</h3>
+        <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+        <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+        <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+    </div>
+
+    <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="about.html">About Us</a></p>
+        <p><a href="products.html">Products</a></p>
+    </div>
+
+    <div>
+        <h3>Useful Links</h3>
+        <p><a href="gallery.html">Gallery</a></p>
+        <p><a href="blog.html">Blog Articles</a></p>
+        <p><a href="contact.html">Contact Us</a></p>
+    </div>
+
+    <div>
+        <h3>Our Location</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Medical Hub, New Delhi</p>
+        <p><i class="fas fa-envelope"></i> info@pharmacare.com</p>
+    </div>
+</footer>
+
+<!-- Cart Drawer Structure -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <span class="close-cart-btn" onclick="toggleCart()">&times;</span>
+    </div>
+    <div class="cart-items-container" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="cartTotalVal">₹0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+    </div>
+</div>
+
+<!-- Booking Modal Structure -->
+<div class="booking-modal-overlay" id="bookingModal">
+    <div class="booking-dialog">
+        <span class="close-booking" onclick="closeBookingModal()">&times;</span>
+        
+        <!-- Form Screen -->
+        <div class="booking-form-body" id="bookingFormBody" style="display: flex; flex-direction: column; gap: 15px;">
+            <h2>Book Appointment</h2>
+            <form id="appointmentForm" class="booking-form" onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label for="bookingName">Full Name *</label>
+                    <input type="text" id="bookingName" placeholder="Enter your full name" required>
+                    <span class="error-msg" id="bookingNameError"></span>
+                </div>
+                
+                <div class="booking-row">
+                    <div class="form-group">
+                        <label for="bookingPhone">Phone Number *</label>
+                        <input type="tel" id="bookingPhone" placeholder="10-digit number" required>
+                        <span class="error-msg" id="bookingPhoneError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingDate">Appointment Date *</label>
+                        <input type="date" id="bookingDate" required>
+                        <span class="error-msg" id="bookingDateError"></span>
+                    </div>
+                </div>
+                
+                <div class="booking-row">
+                    <div class="form-group">
+                        <label for="bookingDoctor">Select Doctor *</label>
+                        <select id="bookingDoctor">
+                            <option value="Dr. Sandeep Kapoor (Cardiologist)">Dr. Sandeep Kapoor (Cardiologist)</option>
+                            <option value="Dr. Shalini Sen (Pediatrician)">Dr. Shalini Sen (Pediatrician)</option>
+                            <option value="Dr. Vikram Aditya (Dermatologist)">Dr. Vikram Aditya (Dermatologist)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingTime">Preferred Time Slot *</label>
+                        <select id="bookingTime">
+                            <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+                            <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
+                            <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="booking-submit-btn">Confirm Appointment</button>
+            </form>
+        </div>
+        
+        <!-- Success Screen -->
+        <div class="booking-success-screen" id="bookingSuccessScreen">
+            <div class="success-icon-wrapper">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3>Appointment Request Sent</h3>
+            <p id="successDetailText"></p>
+            <button class="success-close-btn" onclick="closeBookingModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/global.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
