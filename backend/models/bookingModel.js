@@ -1,3 +1,4 @@
+supabase
 const { supabase } = require('../config/db');
 
 const Booking = {

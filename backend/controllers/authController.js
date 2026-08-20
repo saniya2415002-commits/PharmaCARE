@@ -5,7 +5,7 @@ const { JWT_SECRET } = require('../middleware/auth');
 
 // 1. User Registration Handler
 exports.register = (req, res) => {
-    const { name, email, phone, password, diseases } = req.body;
+    const { name, email, phone, address, password, diseases } = req.body;
 
     if (!name || !email || !phone || !password) {
         return res.status(400).json({ error: 'All fields are required.' });
@@ -19,14 +19,14 @@ exports.register = (req, res) => {
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) return res.status(500).json({ error: 'Password hashing failed.' });
 
-            User.create({ name, email, phone, password: hash, diseases }, (err, newUserId) => {
+            User.create({ name, email, phone, address, password: hash, diseases }, (err, newUserId) => {
                 if (err) return res.status(500).json({ error: 'Failed to create user.' });
 
                 const token = jwt.sign({ id: newUserId, email }, JWT_SECRET, { expiresIn: '7d' });
                 res.status(201).json({
                     message: 'Registration successful.',
                     token,
-                    user: { id: newUserId, name, email, phone, diseases }
+                    user: { id: newUserId, name, email, phone, address, diseases }
                 });
             });
         });
@@ -53,7 +53,7 @@ exports.login = (req, res) => {
             res.json({
                 message: 'Login successful.',
                 token,
-                user: { id: user.id, name: user.name, email: user.email, phone: user.phone, diseases: user.diseases }
+                user: { id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address, diseases: user.diseases }
             });
         });
     });
@@ -70,7 +70,7 @@ exports.me = (req, res) => {
 
 // 4. Update Profile Info Handler
 exports.updateProfile = (req, res) => {
-    const { name, phone, password, diseases } = req.body;
+    const { name, phone, address, password, diseases } = req.body;
 
     if (!name || !phone) {
         return res.status(400).json({ error: 'Name and phone are required.' });
@@ -79,18 +79,18 @@ exports.updateProfile = (req, res) => {
     const userId = req.user.id;
 
     if (password) {
-        // Hash and Update password, name, phone, diseases
+        // Hash and Update password, name, phone, address, diseases
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) return res.status(500).json({ error: 'Password hashing failed.' });
 
-            User.update(userId, { name, phone, password: hash, diseases }, (err) => {
+            User.update(userId, { name, phone, address, password: hash, diseases }, (err) => {
                 if (err) return res.status(500).json({ error: 'Failed to update credentials.' });
                 res.json({ message: 'Profile and password updated successfully.' });
             });
         });
     } else {
-        // Update name, phone, diseases only
-        User.update(userId, { name, phone, diseases }, (err) => {
+        // Update name, phone, address, diseases only
+        User.update(userId, { name, phone, address, diseases }, (err) => {
             if (err) return res.status(500).json({ error: 'Failed to update details.' });
             res.json({ message: 'Profile updated successfully.' });
         });

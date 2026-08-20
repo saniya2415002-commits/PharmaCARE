@@ -102,6 +102,10 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="regAddress">Address Line (Optional)</label>
+                    <input type="text" id="regAddress" placeholder="Enter your full delivery address">
+                </div>
+                <div class="form-group">
                     <label for="regDiseases">Medical Conditions / Diseases (Optional)</label>
                     <input type="text" id="regDiseases" placeholder="E.g. Diabetes, Cough, Fever, Acidity">
                 </div>
@@ -121,6 +125,7 @@
                 <i class="fas fa-user-circle"></i>
                 <h3 id="sidebarUserName">User Name</h3>
                 <span id="sidebarUserEmail">user@email.com</span>
+                <div id="sidebarAddressBadge" style="margin-top: 6px; font-size: 13px; color: var(--text-muted); display: none;"></div>
                 <div id="sidebarDiseaseBadge" style="margin-top: 10px; font-size: 13px; color: var(--primary); font-weight: 600; display: none;"></div>
             </div>
             
@@ -180,6 +185,10 @@
                         <label for="settingsPhone">Phone Number</label>
                         <input type="tel" id="settingsPhone" required>
                         <span class="error-msg" id="settingsPhoneError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsAddress">Address Line</label>
+                        <input type="text" id="settingsAddress" placeholder="Enter your full delivery address">
                     </div>
                     <div class="form-group">
                         <label for="settingsDiseases">Medical Conditions / Diseases</label>

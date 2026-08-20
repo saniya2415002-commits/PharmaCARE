@@ -9,6 +9,9 @@ const User = {
             .eq('email', email)
             .maybeSingle()
             .then(({ data, error }) => {
+                if (data) {
+                    data.address = data.delivery_address || data.address || '';
+                }
                 callback(error, data || null);
             })
             .catch(err => callback(err, null));
@@ -18,10 +21,13 @@ const User = {
     findById: (id, callback) => {
         supabase
             .from('users')
-            .select('id, name, email, phone, diseases, created_at')
+            .select('id, name, email, phone, delivery_address, diseases, created_at')
             .eq('id', id)
             .maybeSingle()
             .then(({ data, error }) => {
+                if (data) {
+                    data.address = data.delivery_address || data.address || '';
+                }
                 callback(error, data || null);
             })
             .catch(err => callback(err, null));
@@ -29,10 +35,11 @@ const User = {
 
     // Register new user
     create: (userData, callback) => {
-        const { name, email, phone, password, diseases } = userData;
+        const { name, email, phone, address, delivery_address, password, diseases } = userData;
+        const addr = delivery_address || address || '';
         supabase
             .from('users')
-            .insert([{ name, email, phone, password, diseases: diseases || '' }])
+            .insert([{ name, email, phone, delivery_address: addr, password, diseases: diseases || '' }])
             .select('id')
             .single()
             .then(({ data, error }) => {
@@ -41,10 +48,11 @@ const User = {
             .catch(err => callback(err, null));
     },
 
-    // Update user details (name, phone, diseases, and optional password)
+    // Update user details (name, phone, delivery_address, diseases, and optional password)
     update: (id, userData, callback) => {
-        const { name, phone, password, diseases } = userData;
-        const updateFields = { name, phone, diseases: diseases || '' };
+        const { name, phone, address, delivery_address, password, diseases } = userData;
+        const addr = delivery_address || address || '';
+        const updateFields = { name, phone, delivery_address: addr, diseases: diseases || '' };
         if (password) {
             updateFields.password = password;
         }

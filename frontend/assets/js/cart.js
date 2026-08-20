@@ -37,7 +37,19 @@ const defaultProductCatalog = {
     'Paracetamol Tablet': { price: 45.00, image: 'assets/images/product_paracetamol.png' },
     'Cough Reliever Syrup': { price: 120.00, image: 'assets/images/product_cough_syrup.png' },
     'Multivitamin Capsule': { price: 250.00, image: 'assets/images/product_multivitamin.png' },
-    'Antiseptic Healing Cream': { price: 85.00, image: 'assets/images/product_antiseptic.png' }
+    'Antiseptic Healing Cream': { price: 85.00, image: 'assets/images/product_antiseptic.png' },
+    'Vitamin C Chewable': { price: 95.00, image: 'assets/images/product_vitamin_c.png' },
+    'Digestion Enzyme Syrup': { price: 140.00, image: 'assets/images/product_digestion.png' },
+    'Ibuprofen Painkiller': { price: 65.00, image: 'assets/images/product_ibuprofen.png' },
+    'Amoxicillin Antibiotic': { price: 180.00, image: 'assets/images/product_amoxicillin.png' },
+    'Moisturizing Aloe Gel': { price: 110.00, image: 'assets/images/product_aloe.png' },
+    'Iron & Folic Acid': { price: 150.00, image: 'assets/images/product_iron.png' },
+    'Calcium Vitamin D3': { price: 220.00, image: 'assets/images/product_calcium.png' },
+    'Allergy Relief Relief': { price: 75.00, image: 'assets/images/product_allergy.png' },
+    'B-Complex Energy Booster': { price: 160.00, image: 'assets/images/product_bcomplex.png' },
+    'Soothing Throat Syrup': { price: 90.00, image: 'assets/images/product_throat_syrup.png' },
+    'Muscle Pain Relief Cream': { price: 125.00, image: 'assets/images/product_muscle_pain.png' },
+    'Omega-3 Fish Oil Capsules': { price: 310.00, image: 'assets/images/product_omega3.png' }
 };
 
 // Add item to cart

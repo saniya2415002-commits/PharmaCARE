@@ -28,6 +28,7 @@ function checkAuthState() {
                 name: "Demo Patient",
                 email: email,
                 phone: "9876543210",
+                address: "123 Health Ave, New Delhi",
                 diseases: "Cough, Fever"
             };
         }
@@ -85,6 +86,18 @@ function displayDashboard(user) {
     const sidebarUserEmail = document.getElementById("sidebarUserEmail");
     if (sidebarUserEmail) sidebarUserEmail.innerText = user.email || '';
     
+    const userAddress = user.delivery_address || user.address || '';
+
+    const sidebarAddress = document.getElementById("sidebarAddressBadge");
+    if (sidebarAddress) {
+        if (userAddress) {
+            sidebarAddress.innerHTML = `<i class="fas fa-map-marker-alt" style="margin-right: 4px;"></i> ${userAddress}`;
+            sidebarAddress.style.display = "block";
+        } else {
+            sidebarAddress.style.display = "none";
+        }
+    }
+
     const sidebarDisease = document.getElementById("sidebarDiseaseBadge");
     if (sidebarDisease) {
         if (user.diseases) {
@@ -103,6 +116,11 @@ function displayDashboard(user) {
 
     const settingsPhone = document.getElementById("settingsPhone");
     if (settingsPhone) settingsPhone.value = user.phone || '';
+    
+    const settingsAddress = document.getElementById("settingsAddress");
+    if (settingsAddress) {
+        settingsAddress.value = userAddress;
+    }
     
     const settingsDiseases = document.getElementById("settingsDiseases");
     if (settingsDiseases) {
@@ -241,6 +259,8 @@ function handleRegister(e) {
     const email = document.getElementById("regEmail").value.trim();
     const phone = document.getElementById("regPhone").value.trim();
     const password = document.getElementById("regPassword").value;
+    const addressInput = document.getElementById("regAddress");
+    const address = addressInput ? addressInput.value.trim() : "";
     const diseasesInput = document.getElementById("regDiseases");
     const diseases = diseasesInput ? diseasesInput.value.trim() : "";
     const errorEl = document.getElementById("registerError");
@@ -266,7 +286,7 @@ function handleRegister(e) {
         if (exists) {
             throw new Error("Email already registered locally.");
         }
-        localUsers.push({ name, email, phone, password, diseases });
+        localUsers.push({ name, email, phone, address, password, diseases });
         localStorage.setItem('pharmacare_users', JSON.stringify(localUsers));
         localStorage.setItem(tokenKey, 'mock-token-' + email);
         checkAuthState();
@@ -277,7 +297,7 @@ function handleRegister(e) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, phone, password, diseases })
+        body: JSON.stringify({ name, email, phone, address, password, diseases })
     })
     .then(res => {
         if (res.status === 404 || res.status === 502 || res.status === 503) {
@@ -325,6 +345,8 @@ function handleUpdateProfile(e) {
     const name = document.getElementById("settingsName").value.trim();
     const phone = document.getElementById("settingsPhone").value.trim();
     const password = document.getElementById("settingsPassword").value;
+    const addressInput = document.getElementById("settingsAddress");
+    const address = addressInput ? addressInput.value.trim() : "";
     const diseasesInput = document.getElementById("settingsDiseases");
     const diseases = diseasesInput ? diseasesInput.value.trim() : "";
     const errorEl = document.getElementById("settingsError");
@@ -341,7 +363,7 @@ function handleUpdateProfile(e) {
         return;
     }
 
-    const payload = { name, phone, diseases };
+    const payload = { name, phone, address, diseases };
     if (password) {
         if (password.length < 6) {
             errorEl.innerText = "New password must be at least 6 characters.";
@@ -355,7 +377,7 @@ function handleUpdateProfile(e) {
     const updateLocally = () => {
         const localUsers = JSON.parse(localStorage.getItem('pharmacare_users')) || [];
         const index = localUsers.findIndex(u => u.email === currentUser.email);
-        const updatedUser = { ...currentUser, name, phone, diseases };
+        const updatedUser = { ...currentUser, name, phone, address, diseases };
         if (password) {
             updatedUser.password = password;
         }
