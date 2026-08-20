@@ -35,8 +35,24 @@ function checkAuthState() {
         return user;
     };
 
-    if (token.startsWith('mock-token-')) {
-        const email = token.replace('mock-token-', '');
+    if (token.startsWith('supabase-token-') || token.startsWith('mock-token-')) {
+        const email = token.replace('supabase-token-', '').replace('mock-token-', '');
+        if (window.SupabaseService) {
+            window.SupabaseService.getUserProfile(email)
+                .then(user => {
+                    if (user) {
+                        currentUser = user;
+                    } else {
+                        currentUser = loadMockUser(email);
+                    }
+                    displayDashboard(currentUser);
+                })
+                .catch(() => {
+                    currentUser = loadMockUser(email);
+                    displayDashboard(currentUser);
+                });
+            return;
+        }
         currentUser = loadMockUser(email);
         displayDashboard(currentUser);
         return;
@@ -211,6 +227,28 @@ function handleLogin(e) {
 
     errorEl.innerText = "";
 
+    const loginWithSupabaseOrLocal = async () => {
+        if (window.SupabaseService) {
+            try {
+                const user = await window.SupabaseService.loginUser(email, password);
+                localStorage.setItem(tokenKey, 'supabase-token-' + email);
+                currentUser = user;
+                checkAuthState();
+                return;
+            } catch (supaErr) {
+                console.warn("Supabase direct login note:", supaErr.message);
+            }
+        }
+        const localUsers = JSON.parse(localStorage.getItem('pharmacare_users')) || [];
+        const matched = localUsers.find(u => u.email === email && u.password === password);
+        if (matched || email === "demo@pharmacare.com") {
+            localStorage.setItem(tokenKey, 'mock-token-' + email);
+            checkAuthState();
+        } else {
+            errorEl.innerText = "Invalid email or password.";
+        }
+    };
+
     fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -220,15 +258,8 @@ function handleLogin(e) {
     })
     .then(res => {
         if (res.status === 404 || res.status === 502 || res.status === 503) {
-            const localUsers = JSON.parse(localStorage.getItem('pharmacare_users')) || [];
-            const matched = localUsers.find(u => u.email === email && u.password === password);
-            if (matched || email === "demo@pharmacare.com") {
-                localStorage.setItem(tokenKey, 'mock-token-' + email);
-                checkAuthState();
-                return null;
-            } else {
-                throw new Error("Invalid credentials or user not registered locally.");
-            }
+            loginWithSupabaseOrLocal();
+            return null;
         }
         return res.json().then(data => ({ status: res.status, data }));
     })
@@ -241,14 +272,7 @@ function handleLogin(e) {
         checkAuthState();
     })
     .catch(err => {
-        const localUsers = JSON.parse(localStorage.getItem('pharmacare_users')) || [];
-        const matched = localUsers.find(u => u.email === email && u.password === password);
-        if (matched || email === "demo@pharmacare.com") {
-            localStorage.setItem(tokenKey, 'mock-token-' + email);
-            checkAuthState();
-        } else {
-            errorEl.innerText = err.message || "Network offline. Register locally first.";
-        }
+        loginWithSupabaseOrLocal();
     });
 }
 
@@ -292,6 +316,29 @@ function handleRegister(e) {
         checkAuthState();
     };
 
+    const registerWithSupabaseOrLocal = async () => {
+        if (window.SupabaseService) {
+            try {
+                const newUser = await window.SupabaseService.registerUser({ name, email, phone, address, password, diseases });
+                localStorage.setItem(tokenKey, 'supabase-token-' + email);
+                currentUser = newUser;
+                checkAuthState();
+                return;
+            } catch (supaErr) {
+                console.warn("Supabase register error:", supaErr.message);
+                if (supaErr.message.includes("already registered")) {
+                    errorEl.innerText = supaErr.message;
+                    return;
+                }
+            }
+        }
+        try {
+            registerLocally();
+        } catch (localErr) {
+            errorEl.innerText = localErr.message;
+        }
+    };
+
     fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -301,7 +348,7 @@ function handleRegister(e) {
     })
     .then(res => {
         if (res.status === 404 || res.status === 502 || res.status === 503) {
-            registerLocally();
+            registerWithSupabaseOrLocal();
             return null;
         }
         return res.json().then(data => ({ status: res.status, data }));
@@ -315,11 +362,7 @@ function handleRegister(e) {
         checkAuthState();
     })
     .catch(err => {
-        try {
-            registerLocally();
-        } catch (localErr) {
-            errorEl.innerText = localErr.message;
-        }
+        registerWithSupabaseOrLocal();
     });
 }
 
@@ -395,8 +438,25 @@ function handleUpdateProfile(e) {
         setTimeout(() => { successEl.style.display = "none"; }, 3000);
     };
 
-    if (token.startsWith('mock-token-')) {
+    const updateWithSupabaseOrLocal = async () => {
+        if (window.SupabaseService && currentUser && currentUser.email) {
+            try {
+                await window.SupabaseService.updateUserProfile(currentUser.email, payload);
+                currentUser = { ...currentUser, ...payload };
+                successEl.style.display = "block";
+                document.getElementById("settingsPassword").value = "";
+                displayDashboard(currentUser);
+                setTimeout(() => { successEl.style.display = "none"; }, 3000);
+                return;
+            } catch (supaErr) {
+                console.warn("Supabase profile update note:", supaErr.message);
+            }
+        }
         updateLocally();
+    };
+
+    if (token && (token.startsWith('mock-token-') || token.startsWith('supabase-token-'))) {
+        updateWithSupabaseOrLocal();
         return;
     }
 
@@ -410,7 +470,7 @@ function handleUpdateProfile(e) {
     })
     .then(res => {
         if (res.status === 404 || res.status === 502 || res.status === 503) {
-            updateLocally();
+            updateWithSupabaseOrLocal();
             return null;
         }
         return res.json().then(data => ({ status: res.status, data }));
@@ -426,7 +486,7 @@ function handleUpdateProfile(e) {
         setTimeout(() => { successEl.style.display = "none"; }, 3000);
     })
     .catch(err => {
-        updateLocally();
+        updateWithSupabaseOrLocal();
     });
 }
 
@@ -443,8 +503,23 @@ function loadDashboardData() {
         renderOrders(localOrders);
     };
 
-    if (token.startsWith('mock-token-')) {
+    const loadSupabaseOrLocalData = async () => {
+        if (window.SupabaseService && currentUser) {
+            try {
+                const bookings = await window.SupabaseService.getUserBookings(currentUser.email, currentUser.phone);
+                const orders = await window.SupabaseService.getUserOrders();
+                renderAppointments(bookings.length > 0 ? bookings : (JSON.parse(localStorage.getItem('pharmacare_bookings')) || []));
+                renderOrders(orders.length > 0 ? orders : (JSON.parse(localStorage.getItem('pharmacare_orders')) || []));
+                return;
+            } catch (e) {
+                console.warn("Supabase loadDashboardData fallback:", e);
+            }
+        }
         loadLocalData();
+    };
+
+    if (token && (token.startsWith('mock-token-') || token.startsWith('supabase-token-'))) {
+        loadSupabaseOrLocalData();
         return;
     }
 
@@ -454,8 +529,8 @@ function loadDashboardData() {
     })
     .then(res => {
         if (res.status === 404) {
-            loadLocalData();
-            throw new Error("Local mode active");
+            loadSupabaseOrLocalData();
+            throw new Error("Local/Supabase mode active");
         }
         return res.json();
     })
@@ -463,8 +538,7 @@ function loadDashboardData() {
         if (data) renderAppointments(data.bookings);
     })
     .catch(err => {
-        console.warn("Loading local appointments due to:", err.message);
-        loadLocalData();
+        loadSupabaseOrLocalData();
     });
 
     // 2. Fetch orders
@@ -479,8 +553,7 @@ function loadDashboardData() {
         if (data) renderOrders(data.orders);
     })
     .catch(err => {
-        console.error("Error loading orders:", err);
-        loadLocalData();
+        loadSupabaseOrLocalData();
     });
 }
 
@@ -504,8 +577,8 @@ function renderAppointments(bookings) {
         const formattedDate = new Date(apt.date).toLocaleDateString('en-US', {
             weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
         });
-        const statusClass = apt.status.toLowerCase();
-        const isCancelled = apt.status.toLowerCase() === 'cancelled';
+        const statusClass = apt.status ? apt.status.toLowerCase() : 'confirmed';
+        const isCancelled = statusClass === 'cancelled';
         const cancelBtnHtml = isCancelled ? '' : `<button class="cancel-apt-btn" onclick="cancelAppointment('${apt.id}')">Cancel</button>`;
 
         html += `
@@ -539,15 +612,27 @@ function cancelAppointment(id) {
         if (index > -1) {
             localBookings[index].status = 'Cancelled';
             localStorage.setItem('pharmacare_bookings', JSON.stringify(localBookings));
-            alert("Appointment cancelled successfully (Local offline mode).");
+            alert("Appointment cancelled successfully.");
             loadDashboardData();
         } else {
-            alert("Failed to find appointment locally.");
+            alert("Failed to find appointment.");
         }
     };
 
-    if (token && token.startsWith('mock-token-')) {
+    const cancelWithSupabaseOrLocal = async () => {
+        if (window.SupabaseService) {
+            const success = await window.SupabaseService.cancelBooking(id);
+            if (success) {
+                alert("Appointment cancelled successfully in Supabase.");
+                loadDashboardData();
+                return;
+            }
+        }
         cancelLocally();
+    };
+
+    if (token && (token.startsWith('mock-token-') || token.startsWith('supabase-token-'))) {
+        cancelWithSupabaseOrLocal();
         return;
     }
 
@@ -560,7 +645,7 @@ function cancelAppointment(id) {
     })
     .then(res => {
         if (res.status === 404 || res.status === 502 || res.status === 503) {
-            cancelLocally();
+            cancelWithSupabaseOrLocal();
             return null;
         }
         return res.json().then(data => ({ status: res.status, data }));
@@ -574,7 +659,7 @@ function cancelAppointment(id) {
         loadDashboardData();
     })
     .catch(err => {
-        cancelLocally();
+        cancelWithSupabaseOrLocal();
     });
 }
 

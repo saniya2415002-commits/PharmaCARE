@@ -128,7 +128,6 @@ function submitBooking(event) {
             headers['Authorization'] = `Bearer ${token}`;
         }
 
-        // Helper: Save locally when backend is unreachable
         const saveBookingLocally = (booking) => {
             const local = JSON.parse(localStorage.getItem('pharmacare_bookings')) || [];
             const newBooking = {
@@ -146,6 +145,22 @@ function submitBooking(event) {
             return newBooking.id;
         };
 
+        const saveBookingWithSupabaseOrLocal = async () => {
+            const bookingPayload = { patient_name: name, phone: phone, date: date, doctor: doctor, time_slot: time };
+            if (window.SupabaseService) {
+                try {
+                    const supaId = await window.SupabaseService.createBooking(bookingPayload);
+                    if (supaId) {
+                        saveBookingLocally({ ...bookingPayload, id: supaId });
+                        return supaId;
+                    }
+                } catch (supaErr) {
+                    console.warn("Supabase booking error:", supaErr);
+                }
+            }
+            return saveBookingLocally(bookingPayload);
+        };
+
         fetch('/api/bookings', {
             method: 'POST',
             headers: headers,
@@ -157,10 +172,10 @@ function submitBooking(event) {
                 time_slot: time
             })
         })
-        .then(res => {
+        .then(async res => {
             if (res.status === 404 || res.status === 502 || res.status === 503) {
-                const localId = saveBookingLocally({ patient_name: name, phone: phone, date: date, doctor: doctor, time_slot: time });
-                return { status: 201, data: { bookingId: localId } };
+                const bId = await saveBookingWithSupabaseOrLocal();
+                return { status: 201, data: { bookingId: bId } };
             }
             return res.json().then(data => ({ status: res.status, data }));
         })
@@ -169,7 +184,6 @@ function submitBooking(event) {
                 throw new Error(res.data.error || 'Booking failed');
             }
 
-            // Hide Form, Show Success Checkmark
             document.getElementById("bookingFormBody").style.display = "none";
             
             const successDetail = document.getElementById("successDetailText");
@@ -180,18 +194,17 @@ function submitBooking(event) {
             document.getElementById("bookingSuccessScreen").style.display = "flex";
             document.getElementById("appointmentForm").reset();
 
-            // Refresh profile dashboard if they are on profile.html
             if (window.loadDashboardData) {
                 window.loadDashboardData();
             }
         })
-        .catch(err => {
-            const localId = saveBookingLocally({ patient_name: name, phone: phone, date: date, doctor: doctor, time_slot: time });
+        .catch(async err => {
+            const bId = await saveBookingWithSupabaseOrLocal();
             
             document.getElementById("bookingFormBody").style.display = "none";
             const successDetail = document.getElementById("successDetailText");
             if (successDetail) {
-                successDetail.innerHTML = `Your appointment with <strong>${doctor}</strong> is scheduled for <strong>${date}</strong> during the <strong>${time}</strong> slot.<br>A coordinator will contact you at <strong>${phone}</strong> shortly to confirm. (Local Offline Mode)`;
+                successDetail.innerHTML = `Your appointment with <strong>${doctor}</strong> is scheduled for <strong>${date}</strong> during the <strong>${time}</strong> slot.<br>A coordinator will contact you at <strong>${phone}</strong> shortly to confirm.`;
             }
             document.getElementById("bookingSuccessScreen").style.display = "flex";
             document.getElementById("appointmentForm").reset();

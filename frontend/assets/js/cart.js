@@ -231,6 +231,22 @@ function handleCheckout() {
         return newId;
     };
 
+    const saveOrderWithSupabaseOrLocal = async () => {
+        const orderPayload = { items: cart, total: total };
+        if (window.SupabaseService) {
+            try {
+                const supaId = await window.SupabaseService.createOrder(orderPayload);
+                if (supaId) {
+                    saveOrderLocally(cart, total);
+                    return supaId;
+                }
+            } catch (e) {
+                console.warn("Supabase create order error:", e);
+            }
+        }
+        return saveOrderLocally(cart, total);
+    };
+
     fetch('/api/orders', {
         method: 'POST',
         headers: headers,
@@ -239,10 +255,10 @@ function handleCheckout() {
             total: total
         })
     })
-    .then(res => {
+    .then(async res => {
         if (res.status === 404 || res.status === 502 || res.status === 503) {
-            const localId = saveOrderLocally(cart, total);
-            return { status: 201, data: { orderId: localId } };
+            const oId = await saveOrderWithSupabaseOrLocal();
+            return { status: 201, data: { orderId: oId } };
         }
         return res.json().then(data => ({ status: res.status, data }));
     })
@@ -265,8 +281,8 @@ function handleCheckout() {
             window.loadDashboardData();
         }
     })
-    .catch(err => {
-        const localId = saveOrderLocally(cart, total);
+    .catch(async err => {
+        const oId = await saveOrderWithSupabaseOrLocal();
 
         cart = [];
         saveCart();
@@ -274,7 +290,7 @@ function handleCheckout() {
         renderCart();
         toggleCart();
 
-        alert(`🎉 Purchase Successful!\nOrder ID: #PC-${localId}\nTotal Order Value: ₹${total.toFixed(2)}\n\nThank you for choosing PharmaCare. Your medicines will be shipped shortly. (Local Offline Mode)`);
+        alert(`🎉 Purchase Successful!\nOrder ID: #PC-${oId}\nTotal Order Value: ₹${total.toFixed(2)}\n\nThank you for choosing PharmaCare. Your medicines will be shipped shortly.`);
 
         if (window.loadDashboardData) {
             window.loadDashboardData();
