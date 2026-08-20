@@ -104,6 +104,13 @@ function displayDashboard(user) {
     
     const userAddress = user.delivery_address || user.address || '';
 
+    try {
+        localStorage.setItem('pharmacare_user', JSON.stringify(user));
+        if (userAddress) {
+            localStorage.setItem('pharmacare_address', userAddress);
+        }
+    } catch (e) {}
+
     const sidebarAddress = document.getElementById("sidebarAddressBadge");
     if (sidebarAddress) {
         if (userAddress) {

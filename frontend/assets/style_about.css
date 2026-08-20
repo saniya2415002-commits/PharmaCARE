@@ -489,3 +489,50 @@
         font-size: 13px;
     }
 }
+
+@media (max-width: 480px) {
+    .page-banner {
+        padding: 35px 12px;
+    }
+    .page-banner h1 {
+        font-size: 24px;
+    }
+    .page-banner p {
+        font-size: 13px;
+    }
+    .about-content h2 {
+        font-size: 20px;
+    }
+    .tab-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .tab-btn {
+        width: 100%;
+        min-width: 100%;
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    .stats-section {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 20px 10px;
+    }
+    .stat-box h3 {
+        font-size: 22px;
+    }
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .team-card {
+        padding: 10px 5px;
+    }
+    .team-card img {
+        width: 60px;
+        height: 60px;
+    }
+    .team-card h3 {
+        font-size: 12px;
+    }
+}

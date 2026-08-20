@@ -10,7 +10,9 @@ const User = {
             .maybeSingle()
             .then(({ data, error }) => {
                 if (data) {
-                    data.address = data.delivery_address || data.address || '';
+                    const addr = data.delivery_address || data.address || data["delivery address"] || '';
+                    data.address = addr;
+                    data.delivery_address = addr;
                 }
                 callback(error, data || null);
             })
@@ -26,7 +28,9 @@ const User = {
             .maybeSingle()
             .then(({ data, error }) => {
                 if (data) {
-                    data.address = data.delivery_address || data.address || '';
+                    const addr = data.delivery_address || data.address || data["delivery address"] || '';
+                    data.address = addr;
+                    data.delivery_address = addr;
                 }
                 callback(error, data || null);
             })
@@ -37,32 +41,35 @@ const User = {
     create: (userData, callback) => {
         const { name, email, phone, address, delivery_address, password, diseases } = userData;
         const addr = delivery_address || address || '';
-        
-        const tryInsert = (payload) => {
-            return supabase.from('users').insert([payload]).select('id').single();
+
+        const payload = {
+            name,
+            email,
+            phone,
+            delivery_address: addr,
+            address: addr,
+            password,
+            diseases: diseases || ''
         };
 
-        tryInsert({ name, email, phone, delivery_address: addr, address: addr, password, diseases: diseases || '' })
+        supabase
+            .from('users')
+            .insert([payload])
+            .select('id')
+            .single()
             .then(({ data, error }) => {
                 if (error) {
-                    tryInsert({ name, email, phone, delivery_address: addr, password, diseases: diseases || '' })
+                    // Fallback: Retry with single address column
+                    delete payload.address;
+                    supabase
+                        .from('users')
+                        .insert([payload])
+                        .select('id')
+                        .single()
                         .then(({ data: d2, error: e2 }) => {
-                            if (e2) {
-                                tryInsert({ name, email, phone, address: addr, password, diseases: diseases || '' })
-                                    .then(({ data: d3, error: e3 }) => {
-                                        if (e3) {
-                                            tryInsert({ name, email, phone, password, diseases: diseases || '' })
-                                                .then(({ data: d4, error: e4 }) => {
-                                                    callback(e4, d4 ? d4.id : null);
-                                                });
-                                        } else {
-                                            callback(null, d3 ? d3.id : null);
-                                        }
-                                    });
-                            } else {
-                                callback(null, d2 ? d2.id : null);
-                            }
-                        });
+                            callback(e2, d2 ? d2.id : null);
+                        })
+                        .catch(err2 => callback(err2, null));
                 } else {
                     callback(null, data ? data.id : null);
                 }
@@ -74,7 +81,13 @@ const User = {
     update: (id, userData, callback) => {
         const { name, phone, address, delivery_address, password, diseases } = userData;
         const addr = delivery_address || address || '';
-        const updateFields = { name, phone, delivery_address: addr, address: addr, diseases: diseases || '' };
+        const updateFields = {
+            name,
+            phone,
+            delivery_address: addr,
+            address: addr,
+            diseases: diseases || ''
+        };
         if (password) {
             updateFields.password = password;
         }
@@ -86,17 +99,12 @@ const User = {
             .then(({ error }) => {
                 if (error) {
                     delete updateFields.address;
-                    supabase.from('users').update(updateFields).eq('id', id)
-                        .then(({ error: e2 }) => {
-                            if (e2) {
-                                delete updateFields.delivery_address;
-                                updateFields.address = addr;
-                                supabase.from('users').update(updateFields).eq('id', id)
-                                    .then(({ error: e3 }) => callback(e3));
-                            } else {
-                                callback(null);
-                            }
-                        });
+                    supabase
+                        .from('users')
+                        .update(updateFields)
+                        .eq('id', id)
+                        .then(({ error: e2 }) => callback(e2))
+                        .catch(err2 => callback(err2));
                 } else {
                     callback(null);
                 }

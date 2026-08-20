@@ -2,15 +2,16 @@ const Order = require('../models/orderModel');
 
 // 1. Create Checkout Purchase Order Controller
 exports.createOrder = (req, res) => {
-    const { items, total } = req.body;
+    const { items, total, address, delivery_address } = req.body;
 
     if (!items || total === undefined) {
         return res.status(400).json({ error: 'Order items and total cost are required.' });
     }
 
-    const user_id = req.user ? req.user.id : null;
+    const user_id = req.user ? req.user.id : (req.body.user_id || null);
+    const orderAddress = delivery_address || address || (req.user ? (req.user.delivery_address || req.user.address) : '');
 
-    Order.create({ user_id, items, total }, (err, newOrderId) => {
+    Order.create({ user_id, items, total, address: orderAddress, delivery_address: orderAddress }, (err, newOrderId) => {
         if (err) return res.status(500).json({ error: 'Failed to save order checkout.' });
         res.status(201).json({
             message: 'Order created successfully.',

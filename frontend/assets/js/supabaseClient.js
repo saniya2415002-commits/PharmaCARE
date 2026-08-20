@@ -73,7 +73,7 @@ const SupabaseService = {
             throw new Error("Email already registered in Supabase.");
         }
 
-        // Try inserting with both delivery_address and address first
+        // Primary payload: mapping project 'address' to Supabase 'delivery_address' & 'address'
         let newUser = {
             name,
             email,
@@ -87,41 +87,25 @@ const SupabaseService = {
         let { data, error } = await client
             .from('users')
             .insert([newUser])
-            .select('id, name, email, phone, delivery_address, address, diseases')
+            .select('*')
             .single();
 
-        // Fallback 1: Retry without address field if column doesn't exist
+        // Fallback: Retry with single address column if combo payload fails
         if (error) {
-            console.warn("Supabase register attempt 1 note:", error.message);
+            console.warn("Supabase insert with dual address columns failed, trying fallback:", error.message);
             delete newUser.address;
             const res1 = await client.from('users').insert([newUser]).select('*').single();
             if (res1.error) {
-                // Fallback 2: Retry with address instead of delivery_address
-                console.warn("Supabase register attempt 2 note:", res1.error.message);
-                delete newUser.delivery_address;
-                newUser.address = addr;
-                const res2 = await client.from('users').insert([newUser]).select('*').single();
-                if (res2.error) {
-                    // Fallback 3: Retry minimal fields
-                    console.warn("Supabase register attempt 3 note:", res2.error.message);
-                    const minimalUser = { name, email, phone, password, diseases: diseases || '' };
-                    const res3 = await client.from('users').insert([minimalUser]).select('*').single();
-                    if (res3.error) {
-                        console.error("All Supabase user insert attempts failed:", res3.error);
-                        throw new Error(res3.error.message || error.message);
-                    }
-                    data = res3.data;
-                } else {
-                    data = res2.data;
-                }
-            } else {
-                data = res1.data;
+                console.error("Supabase user registration failed:", res1.error);
+                throw new Error(res1.error.message || error.message);
             }
+            data = res1.data;
         }
 
         return {
             ...data,
-            address: data.delivery_address || data.address || addr
+            address: data.delivery_address || data.address || data["delivery address"] || addr,
+            delivery_address: data.delivery_address || data.address || data["delivery address"] || addr
         };
     },
 
@@ -144,9 +128,11 @@ const SupabaseService = {
             throw new Error("Invalid email or password.");
         }
 
+        const userAddr = user.delivery_address || user.address || user["delivery address"] || '';
         return {
             ...user,
-            address: user.delivery_address || user.address || ''
+            address: userAddr,
+            delivery_address: userAddr
         };
     },
 
@@ -163,9 +149,11 @@ const SupabaseService = {
 
         if (error || !user) return null;
 
+        const userAddr = user.delivery_address || user.address || user["delivery address"] || '';
         return {
             ...user,
-            address: user.delivery_address || user.address || ''
+            address: userAddr,
+            delivery_address: userAddr
         };
     },
 
@@ -174,7 +162,7 @@ const SupabaseService = {
         const client = getSupabaseClient();
         if (!client) throw new Error("Supabase SDK not initialized.");
 
-        const addr = updateData.address || updateData.delivery_address || '';
+        const addr = updateData.address || updateData.delivery_address || updateData["delivery address"] || '';
         const payload = {
             name: updateData.name,
             phone: updateData.phone,
@@ -192,15 +180,11 @@ const SupabaseService = {
             .eq('email', email);
 
         if (error) {
+            console.warn("Supabase update with dual address failed, trying fallback:", error.message);
             delete payload.address;
             const res1 = await client.from('users').update(payload).eq('email', email);
             if (res1.error) {
-                delete payload.delivery_address;
-                payload.address = addr;
-                const res2 = await client.from('users').update(payload).eq('email', email);
-                if (res2.error) {
-                    throw new Error(res2.error.message || error.message);
-                }
+                throw new Error(res1.error.message || error.message);
             }
         }
         return true;
@@ -281,10 +265,15 @@ const SupabaseService = {
         if (!client) return null;
 
         const itemsString = (typeof orderData.items === 'string') ? orderData.items : JSON.stringify(orderData.items);
+        const addr = orderData.delivery_address || orderData.address || '';
+
         let payload = {
+            user_id: orderData.user_id || null,
             items: itemsString,
             total: orderData.total,
-            status: 'shipped'
+            delivery_address: addr,
+            address: addr,
+            status: orderData.status || 'shipped'
         };
 
         let { data, error } = await client
@@ -294,7 +283,8 @@ const SupabaseService = {
             .single();
 
         if (error) {
-            console.warn("Retrying order insert with JSON array payload due to:", error.message);
+            console.warn("Retrying order insert due to:", error.message);
+            delete payload.address;
             payload.items = Array.isArray(orderData.items) ? orderData.items : [orderData.items];
             const res1 = await client.from('orders').insert([payload]).select('id').single();
             if (res1.error) {

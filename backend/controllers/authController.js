@@ -19,14 +19,14 @@ exports.register = (req, res) => {
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) return res.status(500).json({ error: 'Password hashing failed.' });
 
-            User.create({ name, email, phone, address, password: hash, diseases }, (err, newUserId) => {
+            User.create({ name, email, phone, address, delivery_address: address, password: hash, diseases }, (err, newUserId) => {
                 if (err) return res.status(500).json({ error: 'Failed to create user.' });
 
                 const token = jwt.sign({ id: newUserId, email }, JWT_SECRET, { expiresIn: '7d' });
                 res.status(201).json({
                     message: 'Registration successful.',
                     token,
-                    user: { id: newUserId, name, email, phone, address, diseases }
+                    user: { id: newUserId, name, email, phone, address, delivery_address: address, diseases }
                 });
             });
         });
@@ -49,11 +49,12 @@ exports.login = (req, res) => {
             if (err) return res.status(500).json({ error: 'Authentication failed.' });
             if (!isMatch) return res.status(400).json({ error: 'Invalid email or password.' });
 
+            const userAddress = user.delivery_address || user.address || '';
             const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
             res.json({
                 message: 'Login successful.',
                 token,
-                user: { id: user.id, name: user.name, email: user.email, phone: user.phone, address: user.address, diseases: user.diseases }
+                user: { id: user.id, name: user.name, email: user.email, phone: user.phone, address: userAddress, delivery_address: userAddress, diseases: user.diseases }
             });
         });
     });
@@ -64,7 +65,8 @@ exports.me = (req, res) => {
     User.findById(req.user.id, (err, user) => {
         if (err) return res.status(500).json({ error: 'Failed to retrieve profile.' });
         if (!user) return res.status(404).json({ error: 'User not found.' });
-        res.json({ user });
+        const userAddress = user.delivery_address || user.address || '';
+        res.json({ user: { ...user, address: userAddress, delivery_address: userAddress } });
     });
 };
 
@@ -77,20 +79,22 @@ exports.updateProfile = (req, res) => {
     }
 
     const userId = req.user.id;
+    const updatePayload = { name, phone, address, delivery_address: address, diseases };
 
     if (password) {
         // Hash and Update password, name, phone, address, diseases
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) return res.status(500).json({ error: 'Password hashing failed.' });
+            updatePayload.password = hash;
 
-            User.update(userId, { name, phone, address, password: hash, diseases }, (err) => {
+            User.update(userId, updatePayload, (err) => {
                 if (err) return res.status(500).json({ error: 'Failed to update credentials.' });
                 res.json({ message: 'Profile and password updated successfully.' });
             });
         });
     } else {
         // Update name, phone, address, diseases only
-        User.update(userId, { name, phone, address, diseases }, (err) => {
+        User.update(userId, updatePayload, (err) => {
             if (err) return res.status(500).json({ error: 'Failed to update details.' });
             res.json({ message: 'Profile updated successfully.' });
         });

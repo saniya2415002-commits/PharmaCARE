@@ -645,3 +645,124 @@
         font-size: 26px;
     }
 }
+
+/* Small Phones */
+@media (max-width: 480px) {
+    .page-banner {
+        padding: 40px 10px;
+        margin-bottom: 20px;
+    }
+    .page-banner h1 {
+        font-size: 24px;
+        letter-spacing: -0.5px;
+    }
+    .page-banner p {
+        font-size: 13px;
+    }
+    .blog-filters {
+        padding: 10px;
+        gap: 8px;
+        width: 96%;
+    }
+    .blog-filters .search-box {
+        min-width: unset;
+    }
+    .search-box input {
+        padding: 10px 12px 10px 36px;
+        font-size: 13px;
+    }
+    .search-box::before {
+        left: 12px;
+        font-size: 13px;
+    }
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    .blog-container {
+        width: 96%;
+        margin: 10px auto 30px;
+    }
+    .blog-posts-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .blog-post-card .image-wrapper {
+        height: 160px;
+    }
+    .post-content {
+        padding: 14px;
+    }
+    .post-content h2 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    .post-content p {
+        font-size: 13px;
+        margin-bottom: 14px;
+        -webkit-line-clamp: 3;
+    }
+    .meta-info {
+        font-size: 10px;
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+    .read-btn {
+        padding: 7px 14px;
+        font-size: 11px;
+    }
+    .like-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+    .widget {
+        padding: 18px;
+        margin-bottom: 20px;
+    }
+    .widget h3 {
+        font-size: 15px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+    }
+    .widget-list a {
+        font-size: 13px;
+    }
+    .widget-list li {
+        padding: 10px 0;
+    }
+    .recent-item h4 {
+        font-size: 13px;
+    }
+    .recent-item span {
+        font-size: 11px;
+    }
+    .blog-modal-content {
+        padding: 24px 16px;
+        width: 96%;
+    }
+    .modal-header-img {
+        height: 150px;
+        margin-bottom: 16px;
+    }
+    .modal-article-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+    .modal-meta {
+        font-size: 11px;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .modal-paragraphs p {
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 14px;
+    }
+    .close-modal-btn {
+        top: 12px;
+        right: 12px;
+        width: 34px;
+        height: 34px;
+        font-size: 22px;
+    }
+}

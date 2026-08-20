@@ -202,11 +202,21 @@ function updateCartBadge() {
 }
 
 // Handle Order Checkout
+// Handle Order Checkout
 function handleCheckout() {
     if (cart.length === 0) return;
 
     const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
     
+    // Retrieve current user and delivery address
+    let currentUser = null;
+    try {
+        currentUser = JSON.parse(localStorage.getItem('pharmacare_user')) || null;
+    } catch (e) {}
+
+    let userAddress = currentUser ? (currentUser.delivery_address || currentUser.address || '') : (localStorage.getItem('pharmacare_address') || '');
+    let userId = currentUser ? currentUser.id : null;
+
     const token = localStorage.getItem('pharmacare_token');
     const headers = {
         'Content-Type': 'application/json'
@@ -216,13 +226,16 @@ function handleCheckout() {
     }
 
     // Helper: Save locally when backend is unreachable
-    const saveOrderLocally = (items, totalVal) => {
+    const saveOrderLocally = (items, totalVal, addr) => {
         const local = JSON.parse(localStorage.getItem('pharmacare_orders')) || [];
         const newId = Math.floor(Math.random() * 90000 + 10000);
         const newOrder = {
             id: newId,
+            user_id: userId,
             items: JSON.stringify(items),
             total: totalVal,
+            delivery_address: addr,
+            address: addr,
             status: 'shipped',
             created_at: new Date().toISOString()
         };
@@ -232,19 +245,25 @@ function handleCheckout() {
     };
 
     const saveOrderWithSupabaseOrLocal = async () => {
-        const orderPayload = { items: cart, total: total };
+        const orderPayload = {
+            user_id: userId,
+            items: cart,
+            total: total,
+            delivery_address: userAddress,
+            address: userAddress
+        };
         if (window.SupabaseService) {
             try {
                 const supaId = await window.SupabaseService.createOrder(orderPayload);
                 if (supaId) {
-                    saveOrderLocally(cart, total);
+                    saveOrderLocally(cart, total, userAddress);
                     return supaId;
                 }
             } catch (e) {
                 console.warn("Supabase create order error:", e);
             }
         }
-        return saveOrderLocally(cart, total);
+        return saveOrderLocally(cart, total, userAddress);
     };
 
     fetch('/api/orders', {
@@ -252,7 +271,10 @@ function handleCheckout() {
         headers: headers,
         body: JSON.stringify({
             items: cart,
-            total: total
+            total: total,
+            user_id: userId,
+            delivery_address: userAddress,
+            address: userAddress
         })
     })
     .then(async res => {

@@ -164,3 +164,23 @@
         white-space: nowrap;
     }
 }
+
+@media (max-width: 480px) {
+    .page-banner {
+        padding: 35px 12px;
+    }
+    .page-banner h1 {
+        font-size: 24px;
+    }
+    .page-banner p {
+        font-size: 13px;
+    }
+    .search-box input {
+        padding: 10px 15px 10px 38px;
+        font-size: 13px;
+    }
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+}

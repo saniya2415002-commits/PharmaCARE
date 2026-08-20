@@ -1032,6 +1032,108 @@ footer i {
     }
 }
 
+/* ================= SMALL PHONE RESPONSIVENESS (<480px) ================= */
+@media (max-width: 480px) {
+    header {
+        padding: 10px 3%;
+        gap: 8px;
+    }
+
+    header .logo {
+        font-size: 18px;
+    }
+
+    header .right-actions {
+        gap: 6px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .cart-icon-btn, .profile-icon-btn {
+        font-size: 18px;
+        padding: 6px;
+    }
+
+    .slider {
+        width: 96%;
+        margin: 10px auto;
+    }
+
+    .slides-container {
+        height: 150px;
+    }
+
+    .slide-content h1 {
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+
+    .slide-content p {
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+
+    .section-heading {
+        font-size: 18px;
+        margin: 20px auto 10px auto;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        width: 96%;
+    }
+
+    .card img {
+        height: 110px;
+    }
+
+    .card h3 {
+        font-size: 12px;
+        margin: 6px 6px 4px 6px;
+        height: 32px;
+    }
+
+    .card .price {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    .card button {
+        padding: 6px 10px;
+        font-size: 11px;
+        width: 90%;
+    }
+
+    footer {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 30px 5%;
+        text-align: left;
+    }
+}
+
+/* ================= TABLET RESPONSIVENESS (769px - 1024px) ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+    header {
+        padding: 15px 5%;
+    }
+
+    .products {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    footer {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        padding: 50px 6%;
+    }
+}
+
 /* Global Profile Section Button */
 .profile-icon-btn {
     color: var(--text-muted);

@@ -616,6 +616,156 @@
     }
 }
 
+/* Small Phones */
+@media (max-width: 480px) {
+    .profile-main-container {
+        width: 96%;
+        margin: 12px auto;
+    }
+    .auth-card {
+        padding: 20px 16px;
+    }
+    .auth-tabs {
+        margin-bottom: 18px;
+    }
+    .auth-tab {
+        font-size: 14px;
+        padding: 10px 8px;
+    }
+    .auth-form h2 {
+        font-size: 18px;
+    }
+    .auth-form p {
+        font-size: 12px;
+    }
+    .form-group input {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    .form-group label {
+        font-size: 12px;
+    }
+    .auth-submit-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+    .profile-sidebar-card {
+        padding: 12px;
+        gap: 12px;
+    }
+    .avatar-wrapper i {
+        font-size: 34px;
+        margin-bottom: 6px;
+    }
+    .avatar-wrapper h3 {
+        font-size: 14px;
+    }
+    .avatar-wrapper span {
+        font-size: 10px;
+    }
+    .sidebar-tab-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+        gap: 5px;
+    }
+    .sidebar-tab-btn i {
+        font-size: 12px;
+    }
+    .sidebar-logout-btn {
+        padding: 7px;
+        font-size: 11px;
+    }
+    .profile-content-panels {
+        padding: 14px 10px;
+    }
+    .content-panel h2 {
+        font-size: 16px;
+    }
+    .content-panel p {
+        font-size: 11px;
+        margin-bottom: 12px;
+    }
+    .appointment-log-card {
+        padding: 10px;
+        gap: 10px;
+    }
+    .apt-details h4 {
+        font-size: 13px;
+    }
+    .apt-details p {
+        font-size: 11px;
+    }
+    .status-badge {
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+    .cancel-apt-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+    .order-log-card {
+        padding: 10px;
+        gap: 8px;
+    }
+    .order-log-header h4 {
+        font-size: 13px;
+    }
+    .order-date {
+        font-size: 11px;
+    }
+    .order-item-row {
+        font-size: 11px;
+    }
+    .order-item-qty {
+        font-size: 11px;
+    }
+    .order-total-price {
+        font-size: 13px;
+    }
+    .order-log-footer {
+        padding-top: 6px;
+    }
+    .modal-dialog {
+        padding: 18px 14px;
+    }
+    .order-modal-content h2 {
+        font-size: 16px;
+    }
+    .order-modal-content h3 {
+        font-size: 13px;
+        margin-top: 16px;
+        margin-bottom: 8px;
+    }
+    .order-timeline {
+        margin: 18px 0;
+        padding: 0 4px;
+    }
+    .step-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+    }
+    .step-label {
+        font-size: 9px;
+        margin-top: 5px;
+    }
+    .order-timeline::before {
+        top: 16px;
+        left: 25px;
+        right: 25px;
+        height: 3px;
+    }
+    .close-modal {
+        top: 12px;
+        right: 12px;
+        font-size: 20px;
+    }
+    .track-order-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+}
+
 .cancel-apt-btn {
     padding: 6px 12px;
     font-size: 12px;

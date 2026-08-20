@@ -118,6 +118,26 @@
     gap: 16px;
 }
 
+@media (max-width: 768px) {
+    .booking-dialog {
+        padding: 25px 20px;
+    }
+    .booking-dialog h2 {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+    .booking-form input,
+    .booking-form select,
+    .booking-form textarea {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+    .booking-submit-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
 @media (max-width: 480px) {
     .booking-dialog {
         padding: 20px 15px;

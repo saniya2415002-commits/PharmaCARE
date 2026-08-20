@@ -3,7 +3,8 @@ const { supabase } = require('../config/db');
 const Order = {
     // Create an order checkout record
     create: (orderData, callback) => {
-        const { user_id, items, total, status } = orderData;
+        const { user_id, items, total, status, address, delivery_address } = orderData;
+        const addr = delivery_address || address || '';
         let itemsJson = items;
         if (typeof items === 'string') {
             try {
@@ -13,18 +14,35 @@ const Order = {
             }
         }
         
+        const payload = {
+            user_id: user_id || null,
+            items: itemsJson,
+            total: total,
+            delivery_address: addr,
+            address: addr,
+            status: status || 'shipped'
+        };
+
         supabase
             .from('orders')
-            .insert([{
-                user_id: user_id || null,
-                items: itemsJson,
-                total: total,
-                status: status || 'shipped'
-            }])
+            .insert([payload])
             .select('id')
             .single()
             .then(({ data, error }) => {
-                callback(error, data ? data.id : null);
+                if (error) {
+                    delete payload.address;
+                    supabase
+                        .from('orders')
+                        .insert([payload])
+                        .select('id')
+                        .single()
+                        .then(({ data: d2, error: e2 }) => {
+                            callback(e2, d2 ? d2.id : null);
+                        })
+                        .catch(err2 => callback(err2, null));
+                } else {
+                    callback(null, data ? data.id : null);
+                }
             })
             .catch(err => callback(err, null));
     },
