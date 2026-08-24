@@ -324,6 +324,129 @@
     cursor: not-allowed;
 }
 
+/* Delivery address confirmation */
+.delivery-address-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.delivery-address-dialog {
+    position: relative;
+    width: 480px;
+    max-width: 100%;
+    padding: 32px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-md);
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+}
+
+.delivery-address-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 16px;
+    color: var(--primary);
+    background: rgba(14, 165, 233, 0.1);
+    border-radius: 50%;
+}
+
+.delivery-address-dialog h2 {
+    margin-bottom: 8px;
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-size: 24px;
+}
+
+.delivery-address-copy {
+    margin-bottom: 22px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.delivery-address-dialog label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.delivery-address-dialog textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 12px 14px;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    background: var(--bg-light);
+    font-family: var(--font-body);
+    font-size: 14px;
+}
+
+.delivery-address-dialog textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.delivery-address-error {
+    margin-top: 7px;
+    color: #dc2626;
+    font-size: 12px;
+}
+
+.delivery-address-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.delivery-address-actions button {
+    padding: 11px 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.delivery-address-cancel {
+    color: var(--text-muted);
+    background: var(--bg-light);
+}
+
+.delivery-address-confirm {
+    color: #ffffff;
+    background: var(--primary-gradient);
+}
+
+.delivery-address-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    color: var(--text-muted);
+    background: transparent;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+}
+
 @media (max-width: 768px) {
     .cart-drawer {
         width: 360px;
@@ -354,6 +477,20 @@
 }
 
 @media (max-width: 480px) {
+    .delivery-address-dialog {
+        padding: 24px 20px;
+    }
+
+    .delivery-address-dialog h2 {
+        font-size: 20px;
+    }
+
+    .delivery-address-actions button {
+        flex: 1;
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+
     .cart-drawer {
         width: 100%;
     }

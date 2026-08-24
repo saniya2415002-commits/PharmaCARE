@@ -201,9 +201,68 @@ function updateCartBadge() {
     }
 }
 
+function requestDeliveryAddress(savedAddress) {
+    return new Promise(resolve => {
+        const existingModal = document.getElementById('deliveryAddressModal');
+        if (existingModal) existingModal.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'deliveryAddressModal';
+        overlay.className = 'delivery-address-overlay active';
+        overlay.innerHTML = `
+            <div class="delivery-address-dialog" role="dialog" aria-modal="true" aria-labelledby="deliveryAddressTitle">
+                <button type="button" class="delivery-address-close" aria-label="Close">&times;</button>
+                <div class="delivery-address-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h2 id="deliveryAddressTitle">Where should we deliver?</h2>
+                <p class="delivery-address-copy">Confirm your delivery address before placing this order.</p>
+                <label for="deliveryAddressInput">Delivery address</label>
+                <textarea id="deliveryAddressInput" rows="3" placeholder="Enter your complete delivery address" required></textarea>
+                <p class="delivery-address-error" role="alert" hidden>Please enter a delivery address.</p>
+                <div class="delivery-address-actions">
+                    <button type="button" class="delivery-address-cancel">Cancel</button>
+                    <button type="button" class="delivery-address-confirm">Use this address</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const input = overlay.querySelector('#deliveryAddressInput');
+        const error = overlay.querySelector('.delivery-address-error');
+        const close = () => {
+            overlay.remove();
+            resolve(null);
+        };
+        const confirm = () => {
+            const address = input.value.trim();
+            if (!address) {
+                error.hidden = false;
+                input.focus();
+                return;
+            }
+            localStorage.setItem('pharmacare_address', address);
+            overlay.remove();
+            resolve(address);
+        };
+
+        input.value = savedAddress || '';
+        overlay.querySelector('.delivery-address-close').addEventListener('click', close);
+        overlay.querySelector('.delivery-address-cancel').addEventListener('click', close);
+        overlay.querySelector('.delivery-address-confirm').addEventListener('click', confirm);
+        overlay.addEventListener('click', event => {
+            if (event.target === overlay) close();
+        });
+        input.addEventListener('input', () => {
+            error.hidden = true;
+        });
+        input.addEventListener('keydown', event => {
+            if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) confirm();
+        });
+        input.focus();
+    });
+}
+
 // Handle Order Checkout
-// Handle Order Checkout
-function handleCheckout() {
+async function handleCheckout() {
     if (cart.length === 0) return;
 
     const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
@@ -215,6 +274,13 @@ function handleCheckout() {
     } catch (e) {}
 
     let userAddress = currentUser ? (currentUser.delivery_address || currentUser.address || '') : (localStorage.getItem('pharmacare_address') || '');
+    userAddress = await requestDeliveryAddress(userAddress);
+    if (!userAddress) return;
+
+    if (currentUser) {
+        currentUser.delivery_address = userAddress;
+        localStorage.setItem('pharmacare_user', JSON.stringify(currentUser));
+    }
     let userId = currentUser ? currentUser.id : null;
 
     const token = localStorage.getItem('pharmacare_token');
