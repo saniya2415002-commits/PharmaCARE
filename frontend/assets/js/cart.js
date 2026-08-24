@@ -261,6 +261,91 @@ function requestDeliveryAddress(savedAddress) {
     });
 }
 
+function requestFakePayment(total) {
+    return new Promise(resolve => {
+        const overlay = document.createElement('div');
+        overlay.id = 'fakePaymentModal';
+        overlay.className = 'delivery-address-overlay active';
+        overlay.innerHTML = `
+            <div class="delivery-address-dialog fake-payment-dialog" role="dialog" aria-modal="true" aria-labelledby="fakePaymentTitle">
+                <button type="button" class="delivery-address-close" aria-label="Close">&times;</button>
+                <div class="delivery-address-icon"><i class="fas fa-lock"></i></div>
+                <span class="demo-payment-label">Demo payment</span>
+                <h2 id="fakePaymentTitle">Choose how to pay</h2>
+                <p class="delivery-address-copy">Order total: <strong>₹${total.toFixed(2)}</strong>. This is a simulated checkout; no money will be charged.</p>
+                <div class="fake-payment-methods" role="group" aria-label="Payment method">
+                    <button type="button" class="fake-payment-method active" data-method="card"><i class="fas fa-credit-card"></i><span>Card</span></button>
+                    <button type="button" class="fake-payment-method" data-method="upi"><i class="fas fa-mobile-alt"></i><span>UPI</span></button>
+                    <button type="button" class="fake-payment-method" data-method="cod"><i class="fas fa-hand-holding-usd"></i><span>Cash on delivery</span></button>
+                </div>
+                <div class="fake-payment-fields" data-fields="card">
+                    <label for="fakeCardNumber">Card number</label>
+                    <input id="fakeCardNumber" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242" autocomplete="off">
+                    <div class="fake-payment-row">
+                        <div><label for="fakeCardExpiry">Expiry</label><input id="fakeCardExpiry" maxlength="5" placeholder="MM/YY" autocomplete="off"></div>
+                        <div><label for="fakeCardCvv">CVV</label><input id="fakeCardCvv" inputmode="numeric" maxlength="3" placeholder="123" autocomplete="off"></div>
+                    </div>
+                </div>
+                <div class="fake-payment-fields" data-fields="upi" hidden>
+                    <label for="fakeUpiId">UPI ID</label>
+                    <input id="fakeUpiId" placeholder="name@upi" autocomplete="off">
+                </div>
+                <p class="delivery-address-error" role="alert" hidden>Complete the payment details to continue.</p>
+                <div class="delivery-address-actions">
+                    <button type="button" class="delivery-address-cancel">Cancel</button>
+                    <button type="button" class="delivery-address-confirm fake-payment-submit">Pay ₹${total.toFixed(2)}</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const error = overlay.querySelector('.delivery-address-error');
+        const close = () => {
+            overlay.remove();
+            resolve(false);
+        };
+        const selectedMethod = () => overlay.querySelector('.fake-payment-method.active').dataset.method;
+        const isValid = () => {
+            if (selectedMethod() === 'cod') return true;
+            if (selectedMethod() === 'upi') return /^[^\s@]+@[^\s@]+$/.test(overlay.querySelector('#fakeUpiId').value.trim());
+            return overlay.querySelector('#fakeCardNumber').value.replace(/\s/g, '').length >= 12 &&
+                /^\d{2}\/\d{2}$/.test(overlay.querySelector('#fakeCardExpiry').value.trim()) &&
+                /^\d{3}$/.test(overlay.querySelector('#fakeCardCvv').value.trim());
+        };
+
+        overlay.querySelectorAll('.fake-payment-method').forEach(methodButton => {
+            methodButton.addEventListener('click', () => {
+                overlay.querySelectorAll('.fake-payment-method').forEach(button => button.classList.remove('active'));
+                methodButton.classList.add('active');
+                overlay.querySelectorAll('.fake-payment-fields').forEach(fields => {
+                    fields.hidden = fields.dataset.fields !== methodButton.dataset.method;
+                });
+                overlay.querySelector('.fake-payment-submit').innerText = methodButton.dataset.method === 'cod' ? 'Place order' : `Pay ₹${total.toFixed(2)}`;
+                error.hidden = true;
+            });
+        });
+        overlay.querySelector('.delivery-address-close').addEventListener('click', close);
+        overlay.querySelector('.delivery-address-cancel').addEventListener('click', close);
+        overlay.querySelector('.fake-payment-submit').addEventListener('click', () => {
+            if (!isValid()) {
+                error.hidden = false;
+                return;
+            }
+            const submitButton = overlay.querySelector('.fake-payment-submit');
+            submitButton.disabled = true;
+            submitButton.innerText = 'Processing...';
+            setTimeout(() => {
+                overlay.remove();
+                resolve(true);
+            }, 700);
+        });
+        overlay.addEventListener('click', event => {
+            if (event.target === overlay) close();
+        });
+        overlay.querySelector('#fakeCardNumber').focus();
+    });
+}
+
 // Handle Order Checkout
 async function handleCheckout() {
     if (cart.length === 0) return;
@@ -276,6 +361,9 @@ async function handleCheckout() {
     let userAddress = currentUser ? (currentUser.delivery_address || currentUser.address || '') : (localStorage.getItem('pharmacare_address') || '');
     userAddress = await requestDeliveryAddress(userAddress);
     if (!userAddress) return;
+
+    const paymentConfirmed = await requestFakePayment(total);
+    if (!paymentConfirmed) return;
 
     if (currentUser) {
         currentUser.delivery_address = userAddress;

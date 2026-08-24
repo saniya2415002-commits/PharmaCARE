@@ -447,6 +447,85 @@
     line-height: 1;
 }
 
+.demo-payment-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+    color: #166534;
+    background: #dcfce7;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.fake-payment-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.fake-payment-method {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 58px;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    background: var(--bg-light);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.fake-payment-method.active {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(14, 165, 233, 0.08);
+    box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.12);
+}
+
+.fake-payment-method i {
+    font-size: 15px;
+}
+
+.fake-payment-fields[hidden] {
+    display: none;
+}
+
+.fake-payment-fields label {
+    margin-top: 12px;
+}
+
+.fake-payment-fields input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    background: var(--bg-light);
+    font-family: var(--font-body);
+    font-size: 14px;
+}
+
+.fake-payment-fields input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.fake-payment-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
 @media (max-width: 768px) {
     .cart-drawer {
         width: 360px;
@@ -483,6 +562,17 @@
 
     .delivery-address-dialog h2 {
         font-size: 20px;
+    }
+
+    .fake-payment-methods {
+        gap: 5px;
+    }
+
+    .fake-payment-method {
+        flex-direction: column;
+        min-height: 64px;
+        font-size: 10px;
+        text-align: center;
     }
 
     .delivery-address-actions button {
