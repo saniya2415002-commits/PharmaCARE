@@ -122,7 +122,13 @@
         <!-- Left Column: User Summary Card -->
         <aside class="profile-sidebar-card">
             <div class="avatar-wrapper">
-                <i class="fas fa-user-circle"></i>
+                <div class="profile-avatar" id="profileAvatar" aria-label="Profile picture">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <input type="file" id="profilePictureInput" accept="image/png,image/jpeg,image/webp" hidden>
+                <button type="button" class="profile-picture-btn" onclick="document.getElementById('profilePictureInput').click()">
+                    <i class="fas fa-camera"></i> Add profile picture
+                </button>
                 <h3 id="sidebarUserName">User Name</h3>
                 <span id="sidebarUserEmail">user@email.com</span>
                 <div id="sidebarAddressBadge" style="margin-top: 6px; font-size: 13px; color: var(--text-muted); display: none;"></div>

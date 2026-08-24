@@ -180,10 +180,47 @@
     padding-bottom: 24px;
 }
 
-.avatar-wrapper i {
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bg-light);
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-avatar i {
     font-size: 64px;
     color: var(--primary);
+    line-height: 80px;
+}
+
+.profile-picture-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     margin-bottom: 14px;
+    padding: 8px 12px;
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    border-radius: var(--radius-sm);
+    color: var(--primary);
+    background: rgba(14, 165, 233, 0.08);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    transition: var(--transition-normal);
+}
+
+.profile-picture-btn:hover {
+    color: #ffffff;
+    background: var(--primary);
 }
 
 .avatar-wrapper h3 {

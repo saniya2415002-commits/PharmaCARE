@@ -101,6 +101,42 @@ function displayDashboard(user) {
 
     const sidebarUserEmail = document.getElementById("sidebarUserEmail");
     if (sidebarUserEmail) sidebarUserEmail.innerText = user.email || '';
+
+    const profileAvatar = document.getElementById("profileAvatar");
+    if (profileAvatar) {
+        profileAvatar.innerHTML = user.profile_picture
+            ? `<img src="${user.profile_picture}" alt="${user.name || 'User'} profile picture">`
+            : '<i class="fas fa-user-circle"></i>';
+    }
+
+    const profilePictureInput = document.getElementById("profilePictureInput");
+    if (profilePictureInput && !profilePictureInput.dataset.bound) {
+        profilePictureInput.dataset.bound = 'true';
+        profilePictureInput.addEventListener('change', event => {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Please choose an image smaller than 5 MB.');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                user.profile_picture = reader.result;
+                profileAvatar.innerHTML = `<img src="${reader.result}" alt="${user.name || 'User'} profile picture">`;
+                localStorage.setItem('pharmacare_user', JSON.stringify(user));
+
+                const localUsers = JSON.parse(localStorage.getItem('pharmacare_users')) || [];
+                const userIndex = localUsers.findIndex(localUser => localUser.email === user.email);
+                if (userIndex > -1) {
+                    localUsers[userIndex].profile_picture = reader.result;
+                    localStorage.setItem('pharmacare_users', JSON.stringify(localUsers));
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
     
     const userAddress = user.delivery_address || user.address || '';
 
