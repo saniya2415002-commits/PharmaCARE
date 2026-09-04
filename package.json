@@ -1,7 +1,7 @@
 {
-  "name": "pharmacare-backend",
+  "name": "lifecore-backend",
   "version": "1.0.0",
-  "description": "Backend API server for PharmaCare website using Express and SQLite",
+  "description": "Backend API server for LIFECORE website using Express and SQLite",
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",

@@ -67,7 +67,7 @@ function checkAuthState() {
     })
     .then(res => {
         if (res.status === 404 || res.status === 502 || res.status === 503) {
-            currentUser = loadMockUser("demo@pharmacare.com");
+            currentUser = loadMockUser("demo@lifecore.com");
             displayDashboard(currentUser);
             return null;
         }
@@ -83,7 +83,7 @@ function checkAuthState() {
     })
     .catch(err => {
         console.error(err);
-        currentUser = loadMockUser("demo@pharmacare.com");
+        currentUser = loadMockUser("demo@lifecore.com");
         displayDashboard(currentUser);
     });
 }
@@ -282,9 +282,9 @@ function handleLogin(e) {
                 console.warn("Supabase direct login note:", supaErr.message);
             }
         }
-        const localUsers = JSON.parse(localStorage.getItem('pharmacare_users')) || [];
+        const localUsers = JSON.parse(localStorage.getItem('lifecore_users') || localStorage.getItem('pharmacare_users')) || [];
         const matched = localUsers.find(u => u.email === email && u.password === password);
-        if (matched || email === "demo@pharmacare.com") {
+        if (matched || email === "demo@lifecore.com" || email === "demo@pharmacare.com") {
             localStorage.setItem(tokenKey, 'mock-token-' + email);
             checkAuthState();
         } else {

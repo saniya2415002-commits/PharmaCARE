@@ -450,7 +450,7 @@ async function handleCheckout() {
         renderCart();
         toggleCart();
 
-        alert(`🎉 Purchase Successful!\nOrder ID: #PC-${res.data.orderId}\nTotal Order Value: ₹${total.toFixed(2)}\n\nThank you for choosing PharmaCare. Your medicines will be shipped shortly.`);
+        alert(`🎉 Purchase Successful!\nOrder ID: #LC-${res.data.orderId}\nTotal Order Value: ₹${total.toFixed(2)}\n\nThank you for choosing LIFECORE. Your medicines will be shipped shortly.`);
 
         // Refresh profile dashboard if they are on profile.html
         if (window.loadDashboardData) {
@@ -466,7 +466,7 @@ async function handleCheckout() {
         renderCart();
         toggleCart();
 
-        alert(`🎉 Purchase Successful!\nOrder ID: #PC-${oId}\nTotal Order Value: ₹${total.toFixed(2)}\n\nThank you for choosing PharmaCare. Your medicines will be shipped shortly.`);
+        alert(`🎉 Purchase Successful!\nOrder ID: #LC-${oId}\nTotal Order Value: ₹${total.toFixed(2)}\n\nThank you for choosing LIFECORE. Your medicines will be shipped shortly.`);
 
         if (window.loadDashboardData) {
             window.loadDashboardData();

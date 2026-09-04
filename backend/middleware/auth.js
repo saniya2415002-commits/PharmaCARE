@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'pharmacare_super_secret_key_12345';
+const JWT_SECRET = process.env.JWT_SECRET || 'lifecore_super_secret_key_12345';
 
 // Optional Authentication Middleware (populates req.user if token is valid)
 function authenticateToken(req, res, next) {
